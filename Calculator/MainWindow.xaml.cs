@@ -148,10 +148,7 @@ namespace Calculator
             GetDefenders(defenders);
 
             
-            Debug.WriteLine(fight(attackers, defenders).ToString());
-
-
-            
+            Debug.WriteLine(fight(attackers, defenders).ToString());            
         }
 
 
