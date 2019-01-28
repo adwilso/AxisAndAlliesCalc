@@ -32,6 +32,8 @@ namespace Calculator
     public class Outcome
     {
         public int Winner = Posture.None;
+        public Army FinalAttacker;
+        public Army FinalDefender; 
 
         public override string ToString()
         {
@@ -133,6 +135,8 @@ namespace Calculator
             {
                 throw new Exception("We fucked up");
             }
+            outcome.FinalAttacker = attackers;
+            outcome.FinalDefender = defenders;
             return outcome;
         }
 
@@ -143,15 +147,59 @@ namespace Calculator
             //midway through an attack
             Army attackers = new Army();
             Army defenders = new Army();
-
-            GetAttackers(attackers);
-            GetDefenders(defenders);
+            int rounds = GetRounds();
 
             
-            Debug.WriteLine(fight(attackers, defenders).ToString());            
+
+            List<Outcome> outcomes = new List<Outcome>();
+            for (int i = 0; i < rounds; i++)
+            {
+                attackers = new Army();
+                defenders = new Army();
+                GetAttackers(attackers);
+                GetDefenders(defenders);
+
+                outcomes.Add(fight(attackers, defenders));
+            }
+
+            int totalFights = 0;
+            double attackerLosses = 0;
+            double defenderLosses = 0;
+            double defenderWins = 0;
+            double attackerWins = 0;
+            double ties = 0;
+            foreach (var outcome in outcomes)
+            {
+                totalFights += 1; 
+                defenderLosses += outcome.FinalDefender.Losses;
+                attackerLosses += outcome.FinalAttacker.Losses;
+                if (outcome.Winner == Posture.Attack)
+                {
+                    attackerWins += 1;
+                }
+                else if (outcome.Winner == Posture.Defense)
+                {
+                    defenderWins += 1; 
+                }
+                else if (outcome.Winner == Posture.None)
+                {
+                    ties += 1;
+                }
+            }
+
+            Debug.WriteLine("Defender Wins: " + defenderWins + " Percentage: " + defenderWins / totalFights);
+            Debug.WriteLine("Defender Average Losses: " + defenderLosses / totalFights);
+            Debug.WriteLine("Attacker Wins: " + attackerWins + " Percentage: " + attackerWins / totalFights);
+            Debug.WriteLine("Attacker Average Losses: " + attackerLosses / totalFights);
+
+            Debug.WriteLine("========================================================");
+
         }
 
-
+        private int GetRounds()
+        {
+            return Int32.Parse(rounds.Text);            
+        }
 
         private void GetAttackers(Army attackers)
         {
@@ -247,6 +295,11 @@ namespace Calculator
             }
 
             return;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

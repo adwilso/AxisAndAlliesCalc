@@ -18,6 +18,7 @@ namespace Calculator
         public List<Unit> AA;
         public List<Unit> Fighters;
         public List<Unit> Bombers;
+        public int Losses;
 
         public int numberOfPlanes;
 
@@ -35,6 +36,7 @@ namespace Calculator
             AA = new List<Unit>();
             Fighters = new List<Unit>();
             Bombers = new List<Unit>();
+            Losses = 0;
         }
         public int RollDefence()
         {
@@ -111,6 +113,7 @@ namespace Calculator
         }
         public void RemoveGroundForceDefender(int hitCount)
         {
+            //It handles 0 removes, so just go for it
             hitCount = RemoveAndReturnRemainder(AA, hitCount);
             hitCount = RemoveAndReturnRemainder(Infantry, hitCount);
             hitCount = RemoveAndReturnRemainder(SupportedInfantry, hitCount);
@@ -171,6 +174,7 @@ namespace Calculator
                 {
                     break;
                 }
+                Losses += units.ElementAt(0).ipcValue;
                 units.RemoveAt(0);
             }
             return hitCount;

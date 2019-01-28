@@ -10,6 +10,7 @@ namespace Calculator
     {
         protected int attack;
         protected int defence;
+        public int ipcValue;
         protected static Random rnd = new Random();
         protected int RollDice()
         {
@@ -39,6 +40,7 @@ namespace Calculator
         {
             attack = 1;
             defence = 2;
+            ipcValue = 3;
         }
     }
     public class SupportedInfantry : Unit
@@ -47,6 +49,7 @@ namespace Calculator
         {
             attack = 2;
             defence = 2;
+            ipcValue = 3;
         }
     }
     public class Artillery : Unit
@@ -55,6 +58,7 @@ namespace Calculator
         {
             attack = 2;
             defence = 2;
+            ipcValue = 4;
         }
     }
     public class Tank : Unit
@@ -63,6 +67,7 @@ namespace Calculator
         {
             attack = 3;
             defence = 3;
+            ipcValue = 6;
         }
     }
     public class AA : Unit
@@ -71,6 +76,7 @@ namespace Calculator
         {
             attack = 0;
             defence = 1;
+            ipcValue = 5;
         }
     }
     public class Fighter : Unit
@@ -79,6 +85,7 @@ namespace Calculator
         {
             attack = 3;
             defence = 4;
+            ipcValue = 10;
 
         }
     }
@@ -88,6 +95,7 @@ namespace Calculator
         {
             attack = 4;
             defence = 1;
+            ipcValue = 12;
         }
     }
 }
