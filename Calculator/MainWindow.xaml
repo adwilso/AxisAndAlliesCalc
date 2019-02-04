@@ -8,6 +8,17 @@
         Title="Axis and Allies Simulator" Height="404.5" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+    
+        <!--Combat Controls-->
+        <Grid Grid.Row="0" Grid.Column="0">
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
@@ -17,20 +28,19 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="95*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="Attacker" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
         
+        
+        
+        <Label Grid.Row="0" Grid.Column="0" Content="Attacker" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
         <Label Grid.Row ="1" Grid.Column="0" Content="Defender" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-
-
-
 
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
             <Label Content="Inf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -97,5 +107,29 @@
             <TextBox x:Name="rounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
         </StackPanel>
       <Button Grid.Row ="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
+    </Grid>
+        
+        <!--Results Controls-->
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="10"/>
+                <RowDefinition  Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <Label Content="Attacker Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label Content="Defender Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <Label x:Name="lblAttackerWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="lblDefenderWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="lblTieRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
