@@ -67,11 +67,12 @@
             <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <TextBox x:Name="defBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
         </StackPanel>
-        <Button Content="Fight!" HorizontalAlignment="Left" Height="19" Margin="27,214,0,0" VerticalAlignment="Top" Width="117" Click="Button_Click"/>
+        <Button Content="Fight!" HorizontalAlignment="Left" Height="36" Margin="27,214,0,0" VerticalAlignment="Top" Width="122" Click="Button_Click"/>
         <Label Content="Don't Give &#xD;&#xA;Attackers AA" HorizontalAlignment="Left" Margin="370,55,0,0" VerticalAlignment="Top" Width="88" Height="43"/>
         <Label Content="Attacker" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
         <Label Content="Defender" HorizontalAlignment="Left" Margin="10,163,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="rounds" HorizontalAlignment="Left" Height="23" Margin="413,177,0,0" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged"/>
         <Label Content="Rounds" HorizontalAlignment="Left" Margin="413,151,0,0" VerticalAlignment="Top"/>
+        <Button Content="Reset" HorizontalAlignment="Left" Height="36" Margin="172,214,0,0" VerticalAlignment="Top" Width="122" Click="Button_Click_1" />
     </Grid>
 </Window>

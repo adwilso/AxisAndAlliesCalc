@@ -19,9 +19,7 @@ namespace Calculator
         public List<Unit> Fighters;
         public List<Unit> Bombers;
         public int Losses;
-
-        public int numberOfPlanes;
-
+                
         public void debug(string s)
         {
             //Debug.WriteLine(s);
@@ -105,6 +103,19 @@ namespace Calculator
             return hitCount;
         }
 
+        public int NumberOfRemainingUnits()
+        {
+            int totalUnits = 0;
+            totalUnits += AA.Count;
+            totalUnits += Infantry.Count;
+            totalUnits += SupportedInfantry.Count;
+            totalUnits += Artillery.Count;
+            totalUnits += Tanks.Count;
+            totalUnits += Bombers.Count;
+            totalUnits += Fighters.Count;
+            return totalUnits;
+        }
+
         public void RemoveAirForce(int hitCount)
         {
             hitCount = RemoveAndReturnRemainder(Fighters, hitCount);
@@ -162,7 +173,7 @@ namespace Calculator
             }
             return false;
         }
-        public int RemoveAndReturnRemainder(List<Unit> units, int hitCount)
+        private int RemoveAndReturnRemainder(List<Unit> units, int hitCount)
         {
             if (units.Count == 0)
             {

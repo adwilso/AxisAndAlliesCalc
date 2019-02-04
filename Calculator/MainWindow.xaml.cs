@@ -19,6 +19,17 @@ namespace Calculator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
+    /// To do list: 
+    ///  Output the stats on the main form
+    ///    Record information such as median losses
+    ///    More information on ties
+    ///  Enable naval battles
+    ///  Change the order that units are eliminated
+    ///  Handle the cases where infantry goes from supported to unsupported on attack
+    ///  Gracefully handle the cases where the data was malformed
+    ///  Reset button to clear all the text boxes
+    ///  Save button for common territories
     /// </summary>
     /// 
     public class Posture
@@ -64,6 +75,7 @@ namespace Calculator
         public MainWindow()
         {
             InitializeComponent();
+            ResetUI();
         }
 
         public void debug(string text)
@@ -147,9 +159,7 @@ namespace Calculator
             //midway through an attack
             Army attackers = new Army();
             Army defenders = new Army();
-            int rounds = GetRounds();
-
-            
+            int rounds = GetRounds();            
 
             List<Outcome> outcomes = new List<Outcome>();
             for (int i = 0; i < rounds; i++)
@@ -297,9 +307,38 @@ namespace Calculator
             return;
         }
 
+        private void ResetUI()
+        {
+            defInf.Text = "0";
+            defSupInf.Text = "0";
+            defArt.Text = "0";
+            defAA.Text = "0";
+            defTank.Text = "0";
+            defFight.Text = "0";
+            defBomb.Text = "0";
+
+            attInf.Text = "0";
+            attSupInf.Text = "0";
+            attArt.Text = "0";
+            attAA.Text = "0";
+            attTank.Text = "0";
+            attFight.Text = "0";
+            attBomb.Text = "0";
+
+            rounds.Text = "0";
+        }
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+///     <summary>
+///     When this is clicked, reset the UI back to the starting positions
+///     </summary>
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ResetUI();
         }
     }
 }
