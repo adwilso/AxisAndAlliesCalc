@@ -27,7 +27,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -114,6 +114,8 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition  Height="10"/>
@@ -129,6 +131,16 @@
                 <Label x:Name="lblAttackerWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Label x:Name="lblDefenderWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Label x:Name="lblTieRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="2">
+                <Label Content="Average Attacker IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label Content="Average Defender IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="3">
+                <Label x:Name="lblAttackerAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="lblDefenderAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
         </Grid>
     </Grid>

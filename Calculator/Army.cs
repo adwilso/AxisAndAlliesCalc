@@ -102,7 +102,16 @@ namespace Calculator
             }
             return hitCount;
         }
-
+        private void RebalanceSupportedInfantry()
+        {
+            if (Artillery.Count == 0 || Artillery.Count == SupportedInfantry.Count)
+            {
+                return; 
+            }
+            //We need to move the inf to sup inf, the problem is that we can't lose the test
+            //state or it will screw up the unit tests. Maybe the best solution is to have a 
+            //an upgrade/downgrade method on the inf unit to move between the two classes 
+        }
         public int NumberOfRemainingUnits()
         {
             int totalUnits = 0;

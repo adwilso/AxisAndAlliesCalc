@@ -163,4 +163,52 @@ namespace Calculator
             IpcValue = 12;
         }
     }
+    public class Destroyer : Unit
+    {
+        public Destroyer()
+        {
+            attack = 2;
+            defence = 2;
+            IpcValue = 8;
+        }
+    }
+
+    public class Cruiser : Unit
+    {
+        public Cruiser()
+        {
+            attack = 3;
+            defence = 3; 
+            IpcValue = 12;
+        }
+    }
+    public class AircraftCarrier : Unit
+    {
+        public AircraftCarrier()
+        {
+            attack = 1;
+            defence = 2;
+            IpcValue = 14;
+        }
+    }
+    public class Battleship : Unit
+    {
+        public bool isHit = false;
+        public Battleship()
+        {
+            attack = 4;
+            defence = 4;
+            IpcValue = 20;
+        }
+    }
+    public class Submarine : Unit
+    {
+        public Submarine()
+        {
+            attack = 2;
+            defence = 1;
+            IpcValue = 6;
+        }
+    }
+
 }

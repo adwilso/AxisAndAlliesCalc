@@ -30,6 +30,7 @@ namespace Calculator
     ///  Gracefully handle the cases where the data was malformed
     ///  Reset button to clear all the text boxes
     ///  Save button for common territories
+    ///  Minimal number of units to win a battle give a fight
     /// </summary>
     /// 
     public class Posture
@@ -42,9 +43,15 @@ namespace Calculator
 
     public class Outcome
     {
+        
         public int Winner = Posture.None;
         public Army FinalAttacker;
-        public Army FinalDefender; 
+        public Army FinalDefender;
+
+        private static void debug(string input)
+        {
+            //Debug.WriteLine(input);
+        }
 
         public override string ToString()
         {
@@ -67,6 +74,76 @@ namespace Calculator
             }
             return retval;
         }
+
+        public static Outcome Fight(Army attackers, Army defenders)
+        {
+            Outcome outcome = new Outcome();
+            //Pre comabat - roll one dice for each attacking plane, up to 3 for each AA
+            if (defenders.AA.Count > 0)
+            {
+                int attackingPlanes = attackers.Fighters.Count + attackers.Bombers.Count;
+                if (attackingPlanes > 0)
+                {
+                    int aaHitCount = 0;
+                    foreach (var aa in defenders.AA)
+                    {
+                        //3 rolls or one for each plane
+                        for (int i = 0; i < attackingPlanes && i < 3; i++)
+                        {
+                            if (aa.doesHit(Posture.Defense))
+                            {
+                                debug("AA Hit");
+                                aaHitCount += 1;
+                            }
+                        }
+                    }
+                    attackers.RemoveAirForce(aaHitCount);
+
+                }
+            }
+
+            while (attackers.CanStillFight() && defenders.CanStillFight())
+            {
+                //Combat - round N. Fight!
+                debug("Attacking Army");
+                debug(attackers.ToString());
+                debug("Defending Army");
+                debug(defenders.ToString());
+                debug("Defender Rolls");
+                int defenderHitCount = defenders.RollDefence();
+                debug("Total: " + defenderHitCount);
+                debug("Attacker Rolls");
+                int attackerHitCount = attackers.RollOffense();
+                debug("Total: " + attackerHitCount);
+
+                defenders.RemoveGroundForceDefender(attackerHitCount);
+                attackers.RemoveGroundForceAttacker(defenderHitCount);
+            }
+            debug("Combat is over");
+            if (!defenders.CanStillFight() && attackers.CanStillFight())
+            {
+                debug("Attackers Win");
+                outcome.Winner = Posture.Attack;
+            }
+            else if (defenders.CanStillFight() && !attackers.CanStillFight())
+            {
+                debug("Defenders Win");
+                outcome.Winner = Posture.Defense;
+            }
+            else if (!defenders.CanStillFight() && !attackers.CanStillFight())
+            {
+                debug("Tie");
+                outcome.Winner = Posture.None;
+            }
+            else
+            {
+                throw new Exception("We fucked up");
+            }
+            outcome.FinalAttacker = attackers;
+            outcome.FinalDefender = defenders;
+            return outcome;
+        }
+
 
     }
 
@@ -219,7 +296,14 @@ namespace Calculator
         {
             Outcomes = new List<Outcome>();
         }
-
+        public double AverageAttackerIPCLost()
+        {
+            return AttackerIPCLost / TotalFights;
+        }
+        public double AverageDefenderIPCLost()
+        {
+            return DefenderIPCLost / TotalFights;
+        }
         private void ComputeResults()
         {
             TotalFights = 0;
@@ -265,75 +349,6 @@ namespace Calculator
            //Debug.WriteLine(text);
         }
 
-        private Outcome fight(Army attackers, Army defenders)
-        {
-            Outcome outcome = new Outcome();
-            //Pre comabat - roll one dice for each attacking plane, up to 3 for each AA
-            if (defenders.AA.Count > 0)
-            {
-                int attackingPlanes = attackers.Fighters.Count + attackers.Bombers.Count;
-                if (attackingPlanes > 0)
-                {
-                    int aaHitCount = 0;
-                    foreach (var aa in defenders.AA)
-                    {
-                        //3 rolls or one for each plane
-                        for (int i = 0; i < attackingPlanes && i < 3; i++)
-                        {
-                            if (aa.doesHit(Posture.Defense))
-                            {
-                                debug("AA Hit");
-                                aaHitCount += 1;
-                            }
-                        }
-                    }
-                    attackers.RemoveAirForce(aaHitCount);
-
-                }
-            }
-
-            while (attackers.CanStillFight() && defenders.CanStillFight())
-            {
-                //Combat - round N. Fight!
-                debug("Attacking Army");
-                debug(attackers.ToString());
-                debug("Defending Army");
-                debug(defenders.ToString());
-                debug("Defender Rolls");
-                int defenderHitCount = defenders.RollDefence();
-                debug("Total: " + defenderHitCount);
-                debug("Attacker Rolls");
-                int attackerHitCount = attackers.RollOffense();
-                debug("Total: " + attackerHitCount);
-
-                defenders.RemoveGroundForceDefender(attackerHitCount);
-                attackers.RemoveGroundForceAttacker(defenderHitCount);
-            }
-            debug("Combat is over");
-            if (!defenders.CanStillFight() && attackers.CanStillFight())
-            {
-                debug("Attackers Win");
-                outcome.Winner = Posture.Attack;
-            }
-            else if (defenders.CanStillFight() && !attackers.CanStillFight())
-            {
-                debug("Defenders Win");
-                outcome.Winner = Posture.Defense;
-            }
-            else if (!defenders.CanStillFight() && !attackers.CanStillFight())
-            {
-                debug("Tie");
-                outcome.Winner = Posture.None;
-            }
-            else
-            {
-                throw new Exception("We fucked up");
-            }
-            outcome.FinalAttacker = attackers;
-            outcome.FinalDefender = defenders;
-            return outcome;
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //You always have to kill infantry before artillery. 
@@ -350,7 +365,7 @@ namespace Calculator
                 defenders = new Army();
                 GetAttackers(attackers);
                 GetDefenders(defenders);
-                results.Outcomes.Add(fight(attackers, defenders));
+                results.Outcomes.Add(Outcome.Fight(attackers, defenders));
             }
 
             OutputStats(results);
@@ -361,6 +376,9 @@ namespace Calculator
             lblAttackerWinRate.Content = results.AttackerWinRate + "%";
             lblDefenderWinRate.Content = results.DefenderWinRate + "%";
             lblTieRate.Content = results.TieRate + "%";
+            lblAttackerAverageIPCLost.Content = results.AverageAttackerIPCLost();
+            lblDefenderAverageIPCLost.Content = results.AverageDefenderIPCLost();
+
             Debug.WriteLine("Defender Wins: " + results.DefenderWins + " Percentage: " + results.DefenderWins / results.TotalFights);
             Debug.WriteLine("Defender Average Losses: " + results.DefenderIPCLost / results.TotalFights);
             Debug.WriteLine("Attacker Wins: " + results.AttackerWins + " Percentage: " + results.AttackerWins / results.TotalFights);
