@@ -174,7 +174,7 @@ namespace Calculator
                 {
                     break;
                 }
-                Losses += units.ElementAt(0).ipcValue;
+                Losses += units.ElementAt(0).IpcValue;
                 units.RemoveAt(0);
             }
             return hitCount;
