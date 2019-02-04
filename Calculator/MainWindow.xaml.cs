@@ -325,7 +325,7 @@ namespace Calculator
             attFight.Text = "0";
             attBomb.Text = "0";
 
-            rounds.Text = "0";
+            rounds.Text = "10000";
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
