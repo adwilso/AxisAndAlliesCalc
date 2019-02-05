@@ -11,6 +11,8 @@ namespace Calculator
     /// 
     /// I know this is horrifying, but I need a way to make sure that we aren't running
     /// test code outside of the unit test
+    /// 
+    /// Entirely stolen from StackOverflow because there is no way I'd have thought of this
     /// </summary>
     public static class UnitTestDetector
     {
@@ -22,6 +24,13 @@ namespace Calculator
         }
 
         public static bool IsInUnitTest { get; private set; }
+    }
+    public class Posture
+    {
+        public const int None = 0;
+        public const int Defense = 1;
+        public const int Attack = 2;
+
     }
     public abstract class Unit
     {
@@ -73,7 +82,7 @@ namespace Calculator
         }
         public bool doesHit(int posture)
         {
-            //During tests, we should hit 
+            //During tests, we should control if it hits 
             if (IsTest == true)
             {
                 if (alwaysHit == true)
