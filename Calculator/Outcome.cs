@@ -9,10 +9,24 @@ namespace Calculator
 
     public class Outcome
     {
-
+        
         public int Winner = Posture.None;
         public Army FinalAttacker;
         public Army FinalDefender;
+        public double FinalAttackerLosses
+        {
+            get
+            {
+                return FinalAttacker.Losses;
+            }
+        }
+        public double FinalDefenderLosses
+        {
+            get
+            {
+                return FinalDefender.Losses;
+            }
+        }
 
         //Hook the debug output so I can choose who gets to log
         private static void debug(string input)
@@ -41,32 +55,22 @@ namespace Calculator
             }
             return retval;
         }
-
+        public static Outcome Fight(Fleet attackers, Fleet defenders)
+        {
+            Outcome outcome = new Outcome();
+            return outcome;
+        }
         public static Outcome Fight(Army attackers, Army defenders)
         {
             Outcome outcome = new Outcome();
             //Pre comabat - roll one dice for each attacking plane, up to 3 for each AA
-            if (defenders.AA.Count > 0)
+            if (defenders.HasAA()  && defenders.CanStillFight())
             {
-                int attackingPlanes = attackers.Fighters.Count + attackers.Bombers.Count;
-                if (attackingPlanes > 0)
-                {
-                    int aaHitCount = 0;
-                    foreach (var aa in defenders.AA)
-                    {
-                        //3 rolls or one for each plane
-                        for (int i = 0; i < attackingPlanes && i < 3; i++)
-                        {
-                            if (aa.doesHit(Posture.Defense))
-                            {
-                                debug("AA Hit");
-                                aaHitCount += 1;
-                            }
-                        }
-                    }
-                    attackers.RemoveAirForce(aaHitCount);
-
-                }
+                //TODO: Factor the rolling into the army class
+                //TODO: Add a unit test with 2 AA (always hit) and 1,2,3, and 4 planes. Make sure the right
+                //      army wins in each case
+                int aaHitCount = defenders.RollAADefense(attackers.NumberOfPlanes);
+                attackers.RemoveAirForce(aaHitCount);                
             }
 
             while (attackers.CanStillFight() && defenders.CanStillFight())
@@ -77,10 +81,10 @@ namespace Calculator
                 debug("Defending Army");
                 debug(defenders.ToString());
                 debug("Defender Rolls");
-                int defenderHitCount = defenders.RollDefence();
+                int defenderHitCount = defenders.RollGroundDefense();
                 debug("Total: " + defenderHitCount);
                 debug("Attacker Rolls");
-                int attackerHitCount = attackers.RollOffense();
+                int attackerHitCount = attackers.RollGroundAttack();
                 debug("Total: " + attackerHitCount);
 
                 defenders.RemoveGroundForceDefender(attackerHitCount);
@@ -90,16 +94,20 @@ namespace Calculator
             if (!defenders.CanStillFight() && attackers.CanStillFight())
             {
                 debug("Attackers Win");
+                defenders.RemoveAAPostDefeat();
                 outcome.Winner = Posture.Attack;
             }
             else if (defenders.CanStillFight() && !attackers.CanStillFight())
             {
                 debug("Defenders Win");
+                attackers.RemoveAAPostDefeat();
                 outcome.Winner = Posture.Defense;
             }
             else if (!defenders.CanStillFight() && !attackers.CanStillFight())
             {
                 debug("Tie");
+                attackers.RemoveAAPostDefeat();
+                defenders.RemoveAAPostDefeat();
                 outcome.Winner = Posture.None;
             }
             else
@@ -110,8 +118,5 @@ namespace Calculator
             outcome.FinalDefender = defenders;
             return outcome;
         }
-
-
     }
-
 }

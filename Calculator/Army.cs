@@ -11,13 +11,13 @@ namespace Calculator
     public class Army
     {
 
-        public List<Unit> Infantry;
-        public List<Unit> SupportedInfantry;
-        public List<Unit> Artillery;
-        public List<Unit> Tanks;
+        private List<Unit> Infantry;
+        private List<Unit> SupportedInfantry;
+        private List<Unit> Artillery;
+        private List<Unit> Tanks;
         public List<Unit> AA;
         public List<Unit> Fighters;
-        public List<Unit> Bombers;
+        public  List<Unit> Bombers;
         public int Losses;
                 
         public void debug(string s)
@@ -36,12 +36,128 @@ namespace Calculator
             Bombers = new List<Unit>();
             Losses = 0;
         }
-        public int RollDefence()
+        public int NumberOfPlanes
+        {
+            get
+            {
+                return Fighters.Count + Bombers.Count;
+            }
+        }
+        public int RollGroundDefense()
         {
             return RollGroundCombat(Posture.Defense);
         }
-
-        public int RollOffense()
+        public bool HasAA()
+        {
+            if (AA.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public int CountOfAA()
+        {
+            return AA.Count();
+        }
+        public void AddInfantry(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                this.Infantry.Add(new Infantry(isTest, alwaysHit));
+            }
+        }
+        public void AddSupportedInfantry(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                this.SupportedInfantry.Add(new SupportedInfantry(isTest, alwaysHit));
+            }
+        }
+        public void AddArtillery(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                this.Artillery.Add(new Artillery(isTest, alwaysHit));
+            }
+        }
+        public void AddTanks(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                this.Tanks.Add(new Tank(isTest, alwaysHit));
+            }
+        }
+        public void AddAA(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                this.AA.Add(new AA(isTest, alwaysHit));
+            }
+        }
+        public void AddFighters(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                this.Fighters.Add(new Fighter(isTest, alwaysHit));
+            }
+        }
+        public void AddBombers(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                this.Bombers.Add(new Bomber(isTest, alwaysHit));
+            }
+        }
+        public int RollAADefense(int numberOfPlanes)
+        {
+            int aaHitCount = 0;
+            if (numberOfPlanes > 0)
+            {
+                
+                foreach (var aa in AA)
+                {
+                    //3 rolls or one for each plane
+                    for (int i = 0; i < numberOfPlanes && i < 3; i++)
+                    {
+                        if (aa.doesHit(Posture.Defense))
+                        {
+                            debug("AA Hit");
+                            aaHitCount += 1;
+                        }
+                    }
+                }
+            }
+            return aaHitCount;
+        }
+        public int RollGroundAttack()
         {
             return RollGroundCombat(Posture.Attack);
         }
@@ -102,16 +218,7 @@ namespace Calculator
             }
             return hitCount;
         }
-        private void RebalanceSupportedInfantry()
-        {
-            if (Artillery.Count == 0 || Artillery.Count == SupportedInfantry.Count)
-            {
-                return; 
-            }
-            //We need to move the inf to sup inf, the problem is that we can't lose the test
-            //state or it will screw up the unit tests. Maybe the best solution is to have a 
-            //an upgrade/downgrade method on the inf unit to move between the two classes 
-        }
+
         public int NumberOfRemainingUnits()
         {
             int totalUnits = 0;
@@ -123,6 +230,13 @@ namespace Calculator
             totalUnits += Bombers.Count;
             totalUnits += Fighters.Count;
             return totalUnits;
+        }
+        public void RemoveAAPostDefeat()
+        {
+            if (AA.Count > 0)
+            {
+                RemoveAndReturnRemainder(AA, AA.Count);
+            }            
         }
 
         public void RemoveAirForce(int hitCount)

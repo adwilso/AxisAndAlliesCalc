@@ -12,47 +12,17 @@ namespace CalculatorUnitTests
         public static Army CreateWithTestUnits(int count, bool includeAA, bool isTest, bool alwaysHit)
         {
             Army army = new Army();
-            for (int i = 0; i < count; i++)
+            army.AddInfantry(count,isTest,alwaysHit);
+            army.AddSupportedInfantry(count, isTest, alwaysHit);
+            army.AddArtillery(count, isTest, alwaysHit);
+            if (includeAA == true)
             {
-                Unit temp;
-                temp = new Infantry();
-                temp.IsTest = isTest;
-                temp.AlwaysHit = alwaysHit;
-                army.Infantry.Add(temp);
-
-                temp = new SupportedInfantry();                
-                temp.IsTest = isTest;
-                temp.AlwaysHit = alwaysHit;
-                army.SupportedInfantry.Add(temp);
-
-                temp = new Artillery();
-                temp.IsTest = isTest;
-                temp.AlwaysHit = alwaysHit;
-                army.Artillery.Add(temp);
-
-                if (includeAA == true)
-                {
-                    temp = new AA();
-                    temp.IsTest = isTest;
-                    temp.AlwaysHit = alwaysHit;
-                    army.AA.Add(temp);
-                }
-
-                temp = new Tank();
-                temp.IsTest = isTest;
-                temp.AlwaysHit = alwaysHit;
-                army.Tanks.Add(temp);
-
-                temp = new Fighter();
-                temp.IsTest = isTest;
-                temp.AlwaysHit = alwaysHit;
-                army.Fighters.Add(temp);
-
-                temp = new Bomber();
-                temp.IsTest = isTest;
-                temp.AlwaysHit = alwaysHit;
-                army.Bombers.Add(temp);
+                army.AddAA(count, isTest, alwaysHit);
             }
+            army.AddTanks(count, isTest, alwaysHit);
+            army.AddFighters(count, isTest, alwaysHit);
+            army.AddBombers(count, isTest, alwaysHit);
+
             return army;
         }
         public static Outcome CreateAttackerWin()
@@ -160,6 +130,73 @@ namespace CalculatorUnitTests
             army.RemoveGroundForceDefender(0);
             Assert.AreEqual(army.NumberOfRemainingUnits(), startingUnits);
             Assert.IsTrue(army.CanStillFight());
+        }
+        public static Army CreateWithPlanes(int fighters, int bombers)
+        {
+            Army attacker = new Army();
+            attacker.AddFighters(fighters, true, true);
+            attacker.AddBombers(bombers, true, true);
+            return attacker;
+        }
+        [TestMethod]
+        public void Army_AATest_AACantHit()
+        {
+            Army defender = new Army();
+            defender.AddAA(1, true, true);
+            Army attacker = CreateWithPlanes(1, 0);
+            //Defender can't fight if it only has AA
+            Assert.IsFalse(defender.CanStillFight());
+            Assert.IsTrue(attacker.CanStillFight());
+            Outcome outcome = Outcome.Fight(attacker, defender);
+            Assert.IsFalse(defender.CanStillFight());
+            //You lose your AA even if you can't fight
+            Assert.IsFalse(defender.HasAA());
+            Assert.IsTrue(attacker.CanStillFight());
+            
+        }
+        [TestMethod]
+        public void Army_AATest_AAWins2()
+        {
+            //Defender needs to have a dude, you can't defend with just AA
+            Army defender = new Army();
+            defender.AddAA(1, true, true);
+            defender.AddInfantry(1, true, false);
+            Army attacker = CreateWithPlanes(1, 1);
+
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsTrue(defender.HasAA());
+            Assert.IsTrue(attacker.CanStillFight());            
+            Outcome outcome = Outcome.Fight(attacker, defender);
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsFalse(attacker.CanStillFight());
+        }
+        [TestMethod]
+        public void Army_AATest_AAWins3()
+        {
+            Army defender = new Army();
+            defender.AddInfantry(1, true, false);
+            defender.AddAA(1, true, true);
+            Army attacker = CreateWithPlanes(1, 2);
+
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsTrue(attacker.CanStillFight());
+            Outcome outcome = Outcome.Fight(attacker, defender);
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsFalse(attacker.CanStillFight());
+        }
+        [TestMethod]
+        public void Army_AATest_AALoses()
+        {
+            Army defender = new Army();
+            defender.AddAA(1, true, true);
+            defender.AddInfantry(1, false, false);
+            Army attacker = CreateWithPlanes(1, 3);
+
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsTrue(attacker.CanStillFight());
+            Outcome outcome = Outcome.Fight(attacker, defender);
+            Assert.IsFalse(defender.CanStillFight());
+            Assert.IsTrue(attacker.CanStillFight());
         }
     }
     [TestClass]

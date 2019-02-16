@@ -63,7 +63,8 @@ namespace Calculator
                 defenders = new Army();
                 GetAttackers(attackers);
                 GetDefenders(defenders);
-                results.Outcomes.Add(Outcome.Fight(attackers, defenders));
+                var outcome = Outcome.Fight(attackers, defenders);
+                results.Outcomes.Add(outcome);
             }
 
             OutputStats(results);
@@ -94,47 +95,23 @@ namespace Calculator
         private void GetAttackers(Army attackers)
         {
             //We are throwing on bad input. Way easier in V1
-            UInt32 unitCount= UInt32.Parse(attInf.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                attackers.Infantry.Add(new Infantry());
-            }
+            int unitCount= Int32.Parse(attInf.Text);
+            attackers.AddInfantry(unitCount);            
 
-            unitCount = UInt32.Parse(attSupInf.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                attackers.SupportedInfantry.Add(new SupportedInfantry());
-            }
+            unitCount = Int32.Parse(attSupInf.Text);
+            attackers.AddSupportedInfantry(unitCount);            
 
-            unitCount = UInt32.Parse(attTank.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                attackers.Tanks.Add(new Tank());
-            }
+            unitCount = Int32.Parse(attTank.Text);
+            attackers.AddTanks(unitCount);
 
-            unitCount = UInt32.Parse(attArt.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                attackers.Artillery.Add(new Artillery());
-            }
-            /* Don't do this, attackers can't have AA 
-            unitCount = UInt32.Parse(attAA.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                attackers.AA.Add(new AA());
-            }
-            */
-            unitCount = UInt32.Parse(attFight.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                attackers.Fighters.Add(new Fighter());
-            }
+            unitCount = Int32.Parse(attArt.Text);
+            attackers.AddArtillery(unitCount);
+           
+            unitCount = Int32.Parse(attFight.Text);
+            attackers.AddFighters(unitCount);
 
-            unitCount = UInt32.Parse(attBomb.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                attackers.Bombers.Add(new Bomber());
-            }
+            unitCount = Int32.Parse(attBomb.Text);
+            attackers.AddBombers(unitCount);
 
             return;
         }
@@ -142,47 +119,27 @@ namespace Calculator
         private void GetDefenders(Army defenders)
         {
             //We are throwing on bad input. Way easier in V1
-            UInt32 unitCount = UInt32.Parse(defInf.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                defenders.Infantry.Add(new Infantry());
-            }
+            Int32 unitCount = Int32.Parse(defInf.Text);
+            defenders.AddInfantry(unitCount);            
 
-            unitCount = UInt32.Parse(defSupInf.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                defenders.SupportedInfantry.Add(new SupportedInfantry());
-            }
+            unitCount = Int32.Parse(defSupInf.Text);
+            defenders.AddSupportedInfantry(unitCount);
 
-            unitCount = UInt32.Parse(defTank.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                defenders.Tanks.Add(new Tank());
-            }
+            unitCount = Int32.Parse(defTank.Text);
+            defenders.AddTanks(unitCount);
+            
+            unitCount = Int32.Parse(defAA.Text);
+            defenders.AddAA(unitCount);
 
-            unitCount = UInt32.Parse(defAA.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                defenders.AA.Add(new AA());
-            }
 
-            unitCount = UInt32.Parse(defArt.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                defenders.Artillery.Add(new Artillery());
-            }
+            unitCount = Int32.Parse(defArt.Text);
+            defenders.AddTanks(unitCount);
 
-            unitCount = UInt32.Parse(defFight.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                defenders.Fighters.Add(new Fighter());
-            }
+            unitCount = Int32.Parse(defFight.Text);
+            defenders.AddFighters(unitCount);
 
-            unitCount = UInt32.Parse(defBomb.Text);
-            for (int i = 0; i < unitCount; i++)
-            {
-                defenders.Bombers.Add(new Bomber());
-            }
+            unitCount = Int32.Parse(defBomb.Text);
+            defenders.AddBombers(unitCount);
 
             return;
         }

@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Fleet.cs" />
     <Compile Include="Outcome.cs" />
     <Compile Include="ResultsTracker.cs" />
     <Compile Include="Units.cs" />

@@ -39,7 +39,15 @@ namespace Calculator
         protected bool isTest = false;
         protected bool alwaysHit = false;
         protected static Random rnd = new Random();
-
+        public Unit()
+        {
+            //Do nothing
+        }
+        public Unit(bool setIsTest, bool setAlwaysHit)
+        {
+            IsTest = setIsTest;
+            AlwaysHit = setAlwaysHit;
+        }
         public int IpcValue { get; set; }
 
         public bool IsTest { get { return isTest; }
@@ -55,8 +63,6 @@ namespace Calculator
                 isTest = value; 
             }
         }
-
-
         public bool AlwaysHit
         {
             get { return alwaysHit; }
@@ -116,10 +122,24 @@ namespace Calculator
             defence = 2;
             IpcValue = 3;
         }
+
+        public Infantry(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
+        {
+            attack = 1;
+            defence = 2;
+            IpcValue = 3;
+        }
     }
     public class SupportedInfantry : Unit
     {
         public SupportedInfantry()
+        {
+            attack = 2;
+            defence = 2;
+            IpcValue = 3;
+        }
+
+        public SupportedInfantry(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 2;
             defence = 2;
@@ -134,10 +154,24 @@ namespace Calculator
             defence = 2;
             IpcValue = 4;
         }
+
+        public Artillery(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
+        {
+            attack = 2;
+            defence = 2;
+            IpcValue = 4;
+        }
     }
     public class Tank : Unit
     {
         public Tank()
+        {
+            attack = 3;
+            defence = 3;
+            IpcValue = 6;
+        }
+
+        public Tank(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 3;
             defence = 3;
@@ -152,6 +186,13 @@ namespace Calculator
             defence = 1;
             IpcValue = 5;
         }
+
+        public AA(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
+        {
+            attack = 0;
+            defence = 1;
+            IpcValue = 5;
+        }
     }
     public class Fighter : Unit
     {
@@ -160,12 +201,25 @@ namespace Calculator
             attack = 3;
             defence = 4;
             IpcValue = 10;
+        }
 
+        public Fighter(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
+        {
+            attack = 3;
+            defence = 4;
+            IpcValue = 10;
         }
     }
     public class Bomber : Unit
     {
         public Bomber()
+        {
+            attack = 4;
+            defence = 1;
+            IpcValue = 12;
+        }
+
+        public Bomber(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 4;
             defence = 1;
@@ -181,7 +235,6 @@ namespace Calculator
             IpcValue = 8;
         }
     }
-
     public class Cruiser : Unit
     {
         public Cruiser()

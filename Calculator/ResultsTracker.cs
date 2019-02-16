@@ -179,8 +179,8 @@ namespace Calculator
             foreach (var outcome in outcomes)
             {
                 TotalFights += 1;
-                DefenderIPCLost += outcome.FinalDefender.Losses;
-                AttackerIPCLost += outcome.FinalAttacker.Losses;
+                DefenderIPCLost += outcome.FinalDefenderLosses;
+                AttackerIPCLost += outcome.FinalAttackerLosses;
                 if (outcome.Winner == Posture.Attack)
                 {
                     AttackerWins += 1;
