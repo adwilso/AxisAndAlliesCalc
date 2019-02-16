@@ -15,9 +15,9 @@ namespace Calculator
         private List<Unit> SupportedInfantry;
         private List<Unit> Artillery;
         private List<Unit> Tanks;
-        public List<Unit> AA;
-        public List<Unit> Fighters;
-        public  List<Unit> Bombers;
+        private List<Unit> AA;
+        private List<Unit> Fighters;
+        private List<Unit> Bombers;
         public int Losses;
                 
         public void debug(string s)
@@ -67,7 +67,7 @@ namespace Calculator
             }
             for (int i = 0; i < count; i++)
             {
-                this.Infantry.Add(new Infantry(isTest, alwaysHit));
+                Infantry.Add(new Infantry(isTest, alwaysHit));
             }
         }
         public void AddSupportedInfantry(int count, bool isTest = false, bool alwaysHit = false)
@@ -78,7 +78,7 @@ namespace Calculator
             }
             for (int i = 0; i < count; i++)
             {
-                this.SupportedInfantry.Add(new SupportedInfantry(isTest, alwaysHit));
+                SupportedInfantry.Add(new SupportedInfantry(isTest, alwaysHit));
             }
         }
         public void AddArtillery(int count, bool isTest = false, bool alwaysHit = false)
@@ -89,7 +89,7 @@ namespace Calculator
             }
             for (int i = 0; i < count; i++)
             {
-                this.Artillery.Add(new Artillery(isTest, alwaysHit));
+                Artillery.Add(new Artillery(isTest, alwaysHit));
             }
         }
         public void AddTanks(int count, bool isTest = false, bool alwaysHit = false)
@@ -100,7 +100,7 @@ namespace Calculator
             }
             for (int i = 0; i < count; i++)
             {
-                this.Tanks.Add(new Tank(isTest, alwaysHit));
+                Tanks.Add(new Tank(isTest, alwaysHit));
             }
         }
         public void AddAA(int count, bool isTest = false, bool alwaysHit = false)
@@ -111,7 +111,7 @@ namespace Calculator
             }
             for (int i = 0; i < count; i++)
             {
-                this.AA.Add(new AA(isTest, alwaysHit));
+                AA.Add(new AA(isTest, alwaysHit));
             }
         }
         public void AddFighters(int count, bool isTest = false, bool alwaysHit = false)
@@ -122,7 +122,7 @@ namespace Calculator
             }
             for (int i = 0; i < count; i++)
             {
-                this.Fighters.Add(new Fighter(isTest, alwaysHit));
+                Fighters.Add(new Fighter(isTest, alwaysHit));
             }
         }
         public void AddBombers(int count, bool isTest = false, bool alwaysHit = false)
@@ -133,7 +133,7 @@ namespace Calculator
             }
             for (int i = 0; i < count; i++)
             {
-                this.Bombers.Add(new Bomber(isTest, alwaysHit));
+                Bombers.Add(new Bomber(isTest, alwaysHit));
             }
         }
         public int RollAADefense(int numberOfPlanes)

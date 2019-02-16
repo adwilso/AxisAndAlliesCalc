@@ -189,7 +189,7 @@ namespace CalculatorUnitTests
         {
             Army defender = new Army();
             defender.AddAA(1, true, true);
-            defender.AddInfantry(1, false, false);
+            defender.AddInfantry(1, true, false);
             Army attacker = CreateWithPlanes(1, 3);
 
             Assert.IsTrue(defender.CanStillFight());

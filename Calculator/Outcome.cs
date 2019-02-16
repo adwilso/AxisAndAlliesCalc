@@ -8,8 +8,7 @@ namespace Calculator
 {
 
     public class Outcome
-    {
-        
+    {        
         public int Winner = Posture.None;
         public Army FinalAttacker;
         public Army FinalDefender;
@@ -27,13 +26,11 @@ namespace Calculator
                 return FinalDefender.Losses;
             }
         }
-
         //Hook the debug output so I can choose who gets to log
         private static void debug(string input)
         {
             //Debug.WriteLine(input);
         }
-
         public override string ToString()
         {
             string retval;
@@ -63,12 +60,9 @@ namespace Calculator
         public static Outcome Fight(Army attackers, Army defenders)
         {
             Outcome outcome = new Outcome();
-            //Pre comabat - roll one dice for each attacking plane, up to 3 for each AA
+            //Pre combat - roll one dice for each attacking plane, up to 3 for each AA
             if (defenders.HasAA()  && defenders.CanStillFight())
             {
-                //TODO: Factor the rolling into the army class
-                //TODO: Add a unit test with 2 AA (always hit) and 1,2,3, and 4 planes. Make sure the right
-                //      army wins in each case
                 int aaHitCount = defenders.RollAADefense(attackers.NumberOfPlanes);
                 attackers.RemoveAirForce(aaHitCount);                
             }
