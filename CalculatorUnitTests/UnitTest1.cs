@@ -25,23 +25,23 @@ namespace CalculatorUnitTests
 
             return army;
         }
-        public static Outcome CreateAttackerWin()
+        public static IOutcome CreateAttackerWin()
         {
             Army attacker = TestHelpers.CreateWithTestUnits(1, false, true, true);
             Army defender = TestHelpers.CreateWithTestUnits(1, true, true, false);
-            return Outcome.Fight(attacker, defender);
+            return ArmyOutcome.Fight(attacker, defender);
         }
-        public static Outcome CreateDefenderWin()
+        public static IOutcome CreateDefenderWin()
         {
             Army attacker = TestHelpers.CreateWithTestUnits(1, false, true, false);
             Army defender = TestHelpers.CreateWithTestUnits(1, true, true, true);
-            return Outcome.Fight(attacker, defender);
+            return ArmyOutcome.Fight(attacker, defender);
         }
-        public static Outcome CreateTie()
+        public static IOutcome CreateTie()
         {
             Army attacker = TestHelpers.CreateWithTestUnits(1, false, true, true);
             Army defender = TestHelpers.CreateWithTestUnits(1, false, true, true);
-            return Outcome.Fight(attacker, defender);
+            return ArmyOutcome.Fight(attacker, defender);
         }
     }
     [TestClass]
@@ -147,7 +147,7 @@ namespace CalculatorUnitTests
             //Defender can't fight if it only has AA
             Assert.IsFalse(defender.CanStillFight());
             Assert.IsTrue(attacker.CanStillFight());
-            Outcome outcome = Outcome.Fight(attacker, defender);
+            IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
             Assert.IsFalse(defender.CanStillFight());
             //You lose your AA even if you can't fight
             Assert.IsFalse(defender.HasAA());
@@ -166,7 +166,7 @@ namespace CalculatorUnitTests
             Assert.IsTrue(defender.CanStillFight());
             Assert.IsTrue(defender.HasAA());
             Assert.IsTrue(attacker.CanStillFight());            
-            Outcome outcome = Outcome.Fight(attacker, defender);
+            IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
             Assert.IsTrue(defender.CanStillFight());
             Assert.IsFalse(attacker.CanStillFight());
         }
@@ -180,7 +180,7 @@ namespace CalculatorUnitTests
 
             Assert.IsTrue(defender.CanStillFight());
             Assert.IsTrue(attacker.CanStillFight());
-            Outcome outcome = Outcome.Fight(attacker, defender);
+            IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
             Assert.IsTrue(defender.CanStillFight());
             Assert.IsFalse(attacker.CanStillFight());
         }
@@ -194,7 +194,7 @@ namespace CalculatorUnitTests
 
             Assert.IsTrue(defender.CanStillFight());
             Assert.IsTrue(attacker.CanStillFight());
-            Outcome outcome = Outcome.Fight(attacker, defender);
+            IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
             Assert.IsFalse(defender.CanStillFight());
             Assert.IsTrue(attacker.CanStillFight());
         }
@@ -205,34 +205,33 @@ namespace CalculatorUnitTests
         [TestMethod]
         public void Outcome_FightFindWinner_AttackerWins()
         {
-            Outcome outcome = TestHelpers.CreateAttackerWin();
+            IOutcome outcome = TestHelpers.CreateAttackerWin();
 
-            Assert.IsTrue(outcome.FinalAttacker.CanStillFight());
-            Assert.IsFalse(outcome.FinalDefender.CanStillFight());
-            Assert.AreEqual(outcome.FinalDefender.NumberOfRemainingUnits(), 0);
-            Assert.AreNotEqual(outcome.FinalAttacker.NumberOfRemainingUnits(), 0);
+            Assert.IsTrue(outcome.AttackerCanStillFight());
+            Assert.IsFalse(outcome.DefenderCanStillFight());
+            Assert.AreEqual(outcome.DefenderRemainingUnits(), 0);
+            Assert.AreNotEqual(outcome.AttackerRemainingUnits(), 0);
         }
         [TestMethod]
         public void Outcome_FightFindWinner_DefenderWins()
         {
-            Outcome outcome = TestHelpers.CreateDefenderWin();
+            IOutcome outcome = TestHelpers.CreateDefenderWin();
 
-            Assert.IsFalse(outcome.FinalAttacker.CanStillFight());
-            Assert.IsTrue(outcome.FinalDefender.CanStillFight());
-            Assert.AreNotEqual(outcome.FinalDefender.NumberOfRemainingUnits(), 0);
-            Assert.AreEqual(outcome.FinalAttacker.NumberOfRemainingUnits(), 0);
+            Assert.IsFalse(outcome.AttackerCanStillFight());
+            Assert.IsTrue(outcome.DefenderCanStillFight());
+            Assert.AreNotEqual(outcome.DefenderRemainingUnits(), 0);
+            Assert.AreEqual(outcome.AttackerRemainingUnits(), 0);
         }
         [TestMethod]
         public void Outcome_FightFindWinner_Tie()
         {
-            Outcome outcome = TestHelpers.CreateTie();
+            IOutcome outcome = TestHelpers.CreateTie();
 
-            Assert.IsFalse(outcome.FinalAttacker.CanStillFight());
-            Assert.IsFalse(outcome.FinalDefender.CanStillFight());
-            Assert.AreEqual(outcome.FinalDefender.NumberOfRemainingUnits(), 0);
-            Assert.AreEqual(outcome.FinalAttacker.NumberOfRemainingUnits(), 0);
+            Assert.IsFalse(outcome.AttackerCanStillFight());
+            Assert.IsFalse(outcome.DefenderCanStillFight());
+            Assert.AreEqual(outcome.DefenderRemainingUnits(), 0);
+            Assert.AreEqual(outcome.AttackerRemainingUnits(), 0);
         }
-
     }
     [TestClass]
     public class ResultsTrackerUnitTests

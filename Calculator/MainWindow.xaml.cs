@@ -63,7 +63,7 @@ namespace Calculator
                 defenders = new Army();
                 GetAttackers(attackers);
                 GetDefenders(defenders);
-                var outcome = Outcome.Fight(attackers, defenders);
+                var outcome = ArmyOutcome.Fight(attackers, defenders);
                 results.Outcomes.Add(outcome);
             }
 

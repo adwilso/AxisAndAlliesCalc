@@ -10,14 +10,14 @@ namespace Calculator
     public class ResultsTracker
     {
         private bool dirtyCache = true;
-        private List<Outcome> outcomes;
+        private List<IOutcome> outcomes;
         private int totalFights;
         private double attackerIPCLost;
         private double defenderIPCLost;
         private double attackerWins;
         private double defenderWins;
         private double ties;
-        public List<Outcome> Outcomes
+        public List<IOutcome> Outcomes
         {
             get
             {
@@ -155,7 +155,7 @@ namespace Calculator
         }
         public ResultsTracker()
         {
-            Outcomes = new List<Outcome>();
+            Outcomes = new List<IOutcome>();
         }
         public double AverageAttackerIPCLost()
         {

@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 namespace Calculator
 {
 
-    public class Outcome
+    public class ArmyOutcome : IOutcome
     {        
-        public int Winner = Posture.None;
+        
         public Army FinalAttacker;
         public Army FinalDefender;
+        public int Winner
+        {
+            get; private set;
+        }
         public double FinalAttackerLosses
         {
             get
@@ -25,6 +29,22 @@ namespace Calculator
             {
                 return FinalDefender.Losses;
             }
+        }
+        public bool AttackerCanStillFight()
+        {
+            return FinalAttacker.CanStillFight();
+        }
+        public bool DefenderCanStillFight()
+        {
+            return FinalDefender.CanStillFight();
+        }
+        public int AttackerRemainingUnits()
+        {
+            return FinalAttacker.NumberOfRemainingUnits();
+        }
+        public int DefenderRemainingUnits()
+        {
+            return FinalDefender.NumberOfRemainingUnits();
         }
         //Hook the debug output so I can choose who gets to log
         private static void debug(string input)
@@ -52,14 +72,14 @@ namespace Calculator
             }
             return retval;
         }
-        public static Outcome Fight(Fleet attackers, Fleet defenders)
+        public static IOutcome Fight(Fleet attackers, Fleet defenders)
         {
-            Outcome outcome = new Outcome();
+            ArmyOutcome outcome = new ArmyOutcome();
             return outcome;
         }
-        public static Outcome Fight(Army attackers, Army defenders)
+        public static IOutcome Fight(Army attackers, Army defenders)
         {
-            Outcome outcome = new Outcome();
+            ArmyOutcome outcome = new ArmyOutcome();
             //Pre combat - roll one dice for each attacking plane, up to 3 for each AA
             if (defenders.HasAA()  && defenders.CanStillFight())
             {
