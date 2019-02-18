@@ -50,18 +50,14 @@ namespace CalculatorUnitTests
         [TestMethod]
         public void UnitSetup_UnitTestState_AlwaysHit()
         {
-            Unit unit = new Infantry();
-            unit.AlwaysHit = true;
-            unit.IsTest = true;
+            Unit unit = new Infantry(true, true);
             Assert.IsTrue(unit.doesHit(Posture.Attack));
             Assert.IsTrue(unit.doesHit(Posture.Defense));
         }
         [TestMethod]
         public void UnitSetup_UnitTestState_AlwaysMiss()
         {
-            Unit unit = new Infantry();
-            unit.AlwaysHit = false;
-            unit.IsTest = true;
+            Unit unit = new Infantry(true, false);
             Assert.IsFalse(unit.doesHit(Posture.Attack));
             Assert.IsFalse(unit.doesHit(Posture.Defense));
         }

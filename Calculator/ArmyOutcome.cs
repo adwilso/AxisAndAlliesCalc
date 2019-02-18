@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-
     public class ArmyOutcome : IOutcome
-    {        
-        
-        public Army FinalAttacker;
-        public Army FinalDefender;
+    {                
+        private Army FinalAttacker;
+        private Army FinalDefender;
         public int Winner
         {
             get; private set;
@@ -71,11 +69,6 @@ namespace Calculator
                 throw new Exception("ToString In Outcome fucked up");
             }
             return retval;
-        }
-        public static IOutcome Fight(Fleet attackers, Fleet defenders)
-        {
-            ArmyOutcome outcome = new ArmyOutcome();
-            return outcome;
         }
         public static IOutcome Fight(Army attackers, Army defenders)
         {

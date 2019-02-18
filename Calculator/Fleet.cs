@@ -8,14 +8,14 @@ namespace Calculator
 {
     public class Fleet
     {
-        public List<Unit> Cruisers;
-        public List<Unit> Destroyers;
-        public List<Unit> Battleships;
-        public List<Unit> AircraftCarriers;
-        public List<Unit> Submarines;
-        public List<Unit> Fighters;
-        public List<Unit> Bombers;
-        public int IPCLosses = 0;
+        private List<Unit> Cruisers;
+        private List<Unit> Destroyers;
+        private List<Unit> Battleships;
+        private List<Unit> AircraftCarriers;
+        private List<Unit> Submarines;
+        private List<Unit> Fighters;
+        private List<Unit> Bombers;
+        public int IPCLosses { get; private set; } 
 
         private void debug(string input)
         {
@@ -30,6 +30,101 @@ namespace Calculator
             Submarines = new List<Unit>();
             Fighters = new List<Unit>();
             Bombers = new List<Unit>();
+        }
+        public void AddCruisers (int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                Cruisers.Add(new Cruiser(isTest, alwaysHit));
+            }
+        }
+        public void AddDestroyers(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                Destroyers.Add(new Destroyer(isTest, alwaysHit));
+            }
+        }
+        public void AddBattleships(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                Battleships.Add(new Battleship(isTest, alwaysHit));
+            }
+        }
+        public void AddAircraftCarriers(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                AircraftCarriers.Add(new AircraftCarrier(isTest, alwaysHit));
+            }
+        }
+        public void AddSubmarines(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1)
+            {
+                return;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                Submarines.Add(new Submarine(isTest, alwaysHit));
+            }
+        }
+        public void AddFighters(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1 || !CanAddPlanes(count))
+            {
+                throw new Exception("Can't add more planes"); 
+            }
+            for (int i = 0; i < count; i++)
+            {
+                Fighters.Add(new Fighter(isTest, alwaysHit));
+            }
+        }
+        public void AddBombers(int count, bool isTest = false, bool alwaysHit = false)
+        {
+            if (count < 1 || !CanAddPlanes(count))
+            {
+                throw new Exception("Can't add more planes");                
+            }
+            for (int i = 0; i < count; i++)
+            {
+                Bombers.Add(new Bomber(isTest, alwaysHit));
+            }
+        }
+        public int NumberOfPlanes()
+        {
+            return Bombers.Count + Fighters.Count;
+        }
+        public bool CanAddPlanes(int planesToAdd)
+        {
+            if (planesToAdd <= 0)
+            {
+                return false;
+            }
+            int maxPlanes = AircraftCarriers.Count * AircraftCarrier.Capacity;
+            int currentPlanes = NumberOfPlanes();
+            if (maxPlanes >= currentPlanes + planesToAdd)
+            {
+                return true;
+            }
+            return false;
         }
         public int RollNavalDefense()
         {
@@ -111,6 +206,14 @@ namespace Calculator
             numberOfUnits += Fighters.Count;
             numberOfUnits += Bombers.Count;
             return numberOfUnits;
+        }
+        public bool HasSurfaceShips()
+        {
+            if (Cruisers.Count + Destroyers.Count + AircraftCarriers.Count + Battleships.Count > 0)
+            {
+                return true;
+            }
+            return false;
         }
         public bool CanStillFight()
         {

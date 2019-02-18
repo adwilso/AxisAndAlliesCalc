@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Fleet.cs" />
+    <Compile Include="FleetOutcome.cs" />
     <Compile Include="IOutcome.cs" />
     <Compile Include="ArmyOutcome.cs" />
     <Compile Include="ResultsTracker.cs" />

@@ -116,13 +116,6 @@ namespace Calculator
 
     public class Infantry : Unit
     {
-        public Infantry()
-        {
-            attack = 1;
-            defence = 2;
-            IpcValue = 3;
-        }
-
         public Infantry(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 1;
@@ -132,13 +125,6 @@ namespace Calculator
     }
     public class SupportedInfantry : Unit
     {
-        public SupportedInfantry()
-        {
-            attack = 2;
-            defence = 2;
-            IpcValue = 3;
-        }
-
         public SupportedInfantry(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 2;
@@ -148,13 +134,6 @@ namespace Calculator
     }
     public class Artillery : Unit
     {
-        public Artillery()
-        {
-            attack = 2;
-            defence = 2;
-            IpcValue = 4;
-        }
-
         public Artillery(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 2;
@@ -164,13 +143,6 @@ namespace Calculator
     }
     public class Tank : Unit
     {
-        public Tank()
-        {
-            attack = 3;
-            defence = 3;
-            IpcValue = 6;
-        }
-
         public Tank(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 3;
@@ -180,13 +152,6 @@ namespace Calculator
     }
     public class AA : Unit
     {
-        public AA()
-        {
-            attack = 0;
-            defence = 1;
-            IpcValue = 5;
-        }
-
         public AA(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 0;
@@ -196,13 +161,6 @@ namespace Calculator
     }
     public class Fighter : Unit
     {
-        public Fighter()
-        {
-            attack = 3;
-            defence = 4;
-            IpcValue = 10;
-        }
-
         public Fighter(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 3;
@@ -212,13 +170,6 @@ namespace Calculator
     }
     public class Bomber : Unit
     {
-        public Bomber()
-        {
-            attack = 4;
-            defence = 1;
-            IpcValue = 12;
-        }
-
         public Bomber(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 4;
@@ -228,7 +179,7 @@ namespace Calculator
     }
     public class Destroyer : Unit
     {
-        public Destroyer()
+        public Destroyer(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 2;
             defence = 2;
@@ -237,21 +188,23 @@ namespace Calculator
     }
     public class Cruiser : Unit
     {
-        public Cruiser()
+        public Cruiser(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 3;
-            defence = 3; 
+            defence = 3;
             IpcValue = 12;
         }
     }
     public class AircraftCarrier : Unit
     {
-        public AircraftCarrier()
+        public AircraftCarrier(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 1;
             defence = 2;
             IpcValue = 14;
         }
+
+        public static int Capacity = 2;
     }
     public class Battleship : Unit
     {
@@ -262,10 +215,24 @@ namespace Calculator
             defence = 4;
             IpcValue = 20;
         }
+
+        public Battleship(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
+        {
+            attack = 4;
+            defence = 4;
+            IpcValue = 20;
+        }
     }
     public class Submarine : Unit
     {
         public Submarine()
+        {
+            attack = 2;
+            defence = 1;
+            IpcValue = 6;
+        }
+
+        public Submarine(bool setIsTest, bool setAlwaysHit) : base(setIsTest, setAlwaysHit)
         {
             attack = 2;
             defence = 1;
