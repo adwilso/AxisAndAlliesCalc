@@ -108,6 +108,22 @@ namespace Calculator
                 Bombers.Add(new Bomber(isTest, alwaysHit));
             }
         }
+        public bool HasDestroyer()
+        {
+            if (Destroyers.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool HasSubmarines()
+        {
+            if (Submarines.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
         public int NumberOfPlanes()
         {
             return Bombers.Count + Fighters.Count;
@@ -126,15 +142,65 @@ namespace Calculator
             }
             return false;
         }
-        public int RollNavalDefense()
+        public int RollSubmarineAttack()
         {
-            return RollNavalCombat(Posture.Defense);
+            return RollSubmarine(Posture.Attack);
         }
-        public int RollNavalAttack()
+        public int RollSubmarineDefense()
         {
-            return RollNavalCombat(Posture.Attack);
+            return RollSubmarine(Posture.Defense);
         }
-        private int RollNavalCombat(int posture)
+        private int RollSubmarine(int posture)
+        {
+            int hitCount = 0;
+            foreach (var sub in Submarines)
+            {
+                if (sub.doesHit(posture))
+                {
+                    debug("Surprise Sub Hit");
+                    hitCount++;
+                }
+            }
+            return hitCount;
+        }
+        public int RollPlanesAttacker()
+        {
+            return RollPlaneDamage(Posture.Attack);
+        }
+        public int RollPlanesDefender()
+        {
+            return RollPlaneDamage(Posture.Defense);
+        }
+        private int RollPlaneDamage(int posture)
+        {
+            int hitCount = 0;
+            foreach (var fighter in Fighters)
+            {
+                if (fighter.doesHit(posture))
+                {
+                    debug("Figher Hit");
+                    hitCount++;
+                }
+            }
+            foreach (var bomber in Bombers)
+            {
+                if (bomber.doesHit(posture))
+                {
+                    debug("Bomber Hit");
+                    hitCount++;
+                }
+            }
+            return hitCount;
+        }
+        public int RollSurfaceNavalDefense()
+        {
+            return RollSurfaceNavalCombat(Posture.Defense);
+        }
+        public int RollSurfaceNavalAttack()
+        {
+            return RollSurfaceNavalCombat( Posture.Attack);
+        }
+        private int RollSurfaceNavalCombat(int posture)
         {
             int hitCount = 0;
             foreach (var cruiser in Cruisers)
@@ -169,30 +235,6 @@ namespace Calculator
                     hitCount++;
                 }
             }
-            foreach (var sub in Submarines)
-            {
-                if (sub.doesHit(posture))
-                {
-                    debug("Sub Hit");
-                    hitCount++;
-                }
-            }
-            foreach (var fighter in Fighters)
-            {
-                if (fighter.doesHit(posture))
-                {
-                    debug("Figher Hit");
-                    hitCount++;
-                }
-            }
-            foreach (var bomber in Bombers)
-            {
-                if (bomber.doesHit(posture))
-                {
-                    debug("Bomber Hit");
-                    hitCount++;
-                }
-            }
             return  hitCount;
         }
         public int NumberOfRemainingUnits()
@@ -223,7 +265,34 @@ namespace Calculator
             }
             return false;
         }
-        public void RemoveNavalForceAttacker(int hitCount)
+        public void RemoveSubmarineHits(int hitCount)
+        {
+            // First take as many hits on the battleships as you can since those
+            //are free
+            hitCount = DamageBattleshipAndReturnRemainder(Battleships, hitCount);
+            //Hit the rest of the ships in order of me feeling like it
+            hitCount = RemoveAndReturnRemainder(Cruisers, hitCount);
+            hitCount = RemoveAndReturnRemainder(Destroyers, hitCount);
+            hitCount = RemoveAndReturnRemainder(Submarines, hitCount);
+            hitCount = RemoveAndReturnRemainder(AircraftCarriers, hitCount);
+            hitCount = RemoveAndReturnRemainder(Battleships, hitCount);
+        }
+        public void RemovePlaneHits(int hitCount, bool hasDestroyer)
+        {
+            hitCount = RemoveAndReturnRemainder(Fighters, hitCount);
+            hitCount = RemoveAndReturnRemainder(Bombers, hitCount);
+            hitCount = DamageBattleshipAndReturnRemainder(Battleships, hitCount);
+            hitCount = RemoveAndReturnRemainder(Cruisers, hitCount);
+            hitCount = RemoveAndReturnRemainder(Destroyers, hitCount);
+            hitCount = RemoveAndReturnRemainder(Submarines, hitCount);
+            hitCount = RemoveAndReturnRemainder(AircraftCarriers, hitCount);
+            hitCount = RemoveAndReturnRemainder(Battleships, hitCount);
+            if (hasDestroyer)
+            {
+                hitCount = RemoveAndReturnRemainder(Submarines, hitCount);
+            }
+        }
+        public void RemoveSurfaceHitsAttacker(int hitCount)
         {
             //First take as many hits on the battleships as you can since those 
             //are free
@@ -237,7 +306,7 @@ namespace Calculator
             hitCount = RemoveAndReturnRemainder(AircraftCarriers, hitCount);
             hitCount = RemoveAndReturnRemainder(Battleships, hitCount);
         }
-        public void RemoveNavalForceDefender(int hitCount)
+        public void RemoveSurfaceHitsDefender(int hitCount)
         {
             //First take as many hits on the battleships as you can since those 
             //are free

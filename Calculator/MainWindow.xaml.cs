@@ -21,10 +21,13 @@ namespace Calculator
     /// Interaction logic for MainWindow.xaml
     /// 
     /// To do list: 
+    ///  Add the ability to choose a naval fight
+    ///     Probably want to do this on another tab
+    ///     Output the results of the naval fight, including more details on stalemates
+    ///     
     ///  Output the stats on the main form
     ///    Record information such as median losses
     ///    More information on ties
-    ///  Enable naval battles
     ///  Change the order that units are eliminated
     ///  Handle the cases where infantry goes from supported to unsupported on attack
     ///  Gracefully handle the cases where the data was malformed

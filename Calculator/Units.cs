@@ -30,7 +30,7 @@ namespace Calculator
         public const int None = 0;
         public const int Defense = 1;
         public const int Attack = 2;
-
+        public const int Stalemate = 3;
     }
     public abstract class Unit
     {

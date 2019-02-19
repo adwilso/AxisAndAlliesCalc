@@ -29,11 +29,11 @@ namespace CalculatorUnitTests
             fleet.AddBattleships(1);
             Assert.IsTrue(fleet.CanStillFight());
             Assert.AreEqual(1, fleet.NumberOfRemainingUnits());
-            fleet.RemoveNavalForceAttacker(1);
+            fleet.RemoveSurfaceHitsAttacker(1);
             Assert.IsTrue(fleet.CanStillFight());
             Assert.AreEqual(1, fleet.NumberOfRemainingUnits());
 
-            fleet.RemoveNavalForceAttacker(1);
+            fleet.RemoveSurfaceHitsAttacker(1);
             Assert.IsFalse(fleet.CanStillFight());
             Assert.AreEqual(0, fleet.NumberOfRemainingUnits());
         }
@@ -44,11 +44,11 @@ namespace CalculatorUnitTests
             fleet.AddBattleships(1);
             Assert.IsTrue(fleet.CanStillFight());
             Assert.AreEqual(1, fleet.NumberOfRemainingUnits());
-            fleet.RemoveNavalForceDefender(1);
+            fleet.RemoveSurfaceHitsDefender(1);
             Assert.IsTrue(fleet.CanStillFight());
             Assert.AreEqual(1, fleet.NumberOfRemainingUnits());
 
-            fleet.RemoveNavalForceDefender(1);
+            fleet.RemoveSurfaceHitsDefender(1);
             Assert.IsFalse(fleet.CanStillFight());
             Assert.AreEqual(0, fleet.NumberOfRemainingUnits());
         }
@@ -136,7 +136,7 @@ namespace CalculatorUnitTests
             Assert.IsFalse(fleet.CanAddPlanes(1));
             Assert.IsFalse(fleet.CanAddPlanes(2));
             Assert.IsFalse(fleet.CanAddPlanes(3));
-            Assert.ThrowsException<Exception>( () => fleet.AddFighters(1));            
+            Assert.ThrowsException<Exception>(() => fleet.AddFighters(1));
         }
         [TestMethod]
         public void Fleet_AddingPlanes_TwoBombers()
@@ -156,6 +156,142 @@ namespace CalculatorUnitTests
             Assert.IsFalse(fleet.CanAddPlanes(2));
             Assert.IsFalse(fleet.CanAddPlanes(3));
             Assert.ThrowsException<Exception>(() => fleet.AddBombers(1));
+        }
+        [TestMethod]
+        public void Fleet_CanFightEachOther_SubsOnly()
+        {
+            Fleet attacker = new Fleet();
+            Fleet defender = new Fleet();
+            attacker.AddSubmarines(1);
+            defender.AddSubmarines(1);
+            Assert.IsTrue(attacker.CanStillFight());
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(defender, attacker));
+        }
+        [TestMethod]
+        public void Fleet_CanFightEachOther_SubVsDestroyer()
+        {
+            Fleet attacker = new Fleet();
+            Fleet defender = new Fleet();
+            attacker.AddSubmarines(1);
+            defender.AddDestroyers(1);
+            Assert.IsTrue(attacker.CanStillFight());
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(defender, attacker));
+        }
+        [TestMethod]
+        public void Fleet_CanFightEachOther_SubVsBattleship()
+        {
+            Fleet attacker = new Fleet();
+            Fleet defender = new Fleet();
+            attacker.AddSubmarines(1);
+            defender.AddBattleships(1);
+            Assert.IsTrue(attacker.CanStillFight());
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsFalse(FleetOutcome.CanFightEachOther(attacker, defender));
+            Assert.IsFalse(FleetOutcome.CanFightEachOther(defender, attacker));
+        }
+        [TestMethod]
+        public void Fleet_CanFightEachOther_SubVsPlane()
+        {
+            //Fill this in when there is a way to remove the aircraft carrier
+            //without removing the plane. Until then, ignore this test
+            Assert.IsTrue(true);
+        }
+        [TestMethod]
+        public void Fleet_CanFightEachOther_FullFleets()
+        {
+            Fleet attacker = FleetTestHelpers.CreateWithTestUnits(1, false, false);
+            Fleet defender = FleetTestHelpers.CreateWithTestUnits(1, false, false);
+            Assert.IsTrue(attacker.CanStillFight());
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(defender, attacker));
+        }
+        [TestMethod]
+        public void Fleet_CanFightEachOther_PlanesVsPlanes()
+        {
+            Fleet attacker = new Fleet();
+            Fleet defender = new Fleet();
+            attacker.AddAircraftCarriers(1);
+            attacker.AddFighters(2);
+            defender.AddAircraftCarriers(1);
+            defender.AddFighters(2);
+            Assert.IsTrue(attacker.CanStillFight());
+            Assert.IsTrue(defender.CanStillFight());
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(defender, attacker));
+        }
+        [TestMethod]
+        public void Fleet_SupriseAttack_SubAlwaysHit()
+        {
+            Fleet fleet = new Fleet();
+            fleet.AddSubmarines(1, true, true);
+            Assert.AreEqual(1, fleet.RollSubmarineAttack());
+            Assert.AreEqual(1, fleet.RollSubmarineDefense());
+        }
+        [TestMethod]
+        public void Fleet_RemoveSubmarineHits_PlanesAndNoPlanes()
+        {
+            Fleet fleet = new Fleet();
+            fleet.AddAircraftCarriers(1);
+            fleet.AddBombers(2);
+            Assert.IsTrue(fleet.HasSurfaceShips());
+            Assert.AreEqual(2, fleet.NumberOfPlanes());
+            fleet.RemoveSubmarineHits(3);
+            Assert.IsFalse(fleet.HasSurfaceShips());
+            Assert.AreEqual(2, fleet.NumberOfPlanes());
+        }
+        [TestMethod]
+        public void Fleet_AttackersWin_FullFleet()
+        {
+            Fleet attacker = FleetTestHelpers.CreateWithTestUnits(3, true, true);
+            Fleet defender = FleetTestHelpers.CreateWithTestUnits(3, true, false);
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Attack, outcome.Winner);
+            Assert.IsTrue(outcome.AttackerCanStillFight());
+            Assert.IsFalse(outcome.DefenderCanStillFight());
+        }
+        [TestMethod]
+        public void Fleet_DefendersWin_FullFleet()
+        {
+            Fleet attacker = FleetTestHelpers.CreateWithTestUnits(3, true, false);
+            Fleet defender = FleetTestHelpers.CreateWithTestUnits(3, true, true);
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Defense, outcome.Winner);
+            Assert.IsFalse(outcome.AttackerCanStillFight());
+            Assert.IsTrue(outcome.DefenderCanStillFight());
+        }
+        [TestMethod]
+        public void Fleet_SubsVsPlanes_Stalemate()
+        {
+            Fleet attacker = new Fleet();
+            Fleet defender = new Fleet();
+            attacker.AddAircraftCarriers(1, true, false);
+            attacker.AddFighters(2, true, true);
+            defender.AddSubmarines(1, true, true);
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Stalemate, outcome.Winner);
+            Assert.IsTrue(outcome.AttackerCanStillFight());
+            Assert.IsTrue(outcome.DefenderCanStillFight());
+        }
+        [TestMethod]
+        public void Fleet_TieFight_OnlySubs()
+        {
+            Fleet attacker = new Fleet();
+            Fleet defender = new Fleet();
+            attacker.AddSubmarines(3, true, true);
+            defender.AddSubmarines(3, true, true);
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.None, outcome.Winner);
+            Assert.IsFalse(outcome.AttackerCanStillFight());
+            Assert.IsFalse(outcome.DefenderCanStillFight());
         }
     }
 }
