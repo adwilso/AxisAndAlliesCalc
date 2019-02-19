@@ -190,8 +190,8 @@ namespace CalculatorUnitTests
             defender.AddBattleships(1);
             Assert.IsTrue(attacker.CanStillFight());
             Assert.IsTrue(defender.CanStillFight());
-            Assert.IsFalse(FleetOutcome.CanFightEachOther(attacker, defender));
-            Assert.IsFalse(FleetOutcome.CanFightEachOther(defender, attacker));
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(defender, attacker));
         }
         [TestMethod]
         public void Fleet_CanFightEachOther_SubVsPlane()
