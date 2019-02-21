@@ -279,6 +279,7 @@ namespace CalculatorUnitTests
             Assert.AreEqual(Posture.Stalemate, outcome.Winner);
             Assert.IsTrue(outcome.AttackerCanStillFight());
             Assert.IsTrue(outcome.DefenderCanStillFight());
+            Assert.AreEqual(2, attacker.PlanesWithoutLandingLocation());
         }
         [TestMethod]
         public void Fleet_TieFight_OnlySubs()
@@ -292,7 +293,6 @@ namespace CalculatorUnitTests
             Assert.AreEqual(Posture.None, outcome.Winner);
             Assert.IsFalse(outcome.AttackerCanStillFight());
             Assert.IsFalse(outcome.DefenderCanStillFight());
-            Assert.AreEqual(2, attacker.PlanesWithoutLandingLocation());
         }
         [TestMethod]
         public void Fleet_SurfaceShipsHittingSubs_AttackersWin()
@@ -334,7 +334,6 @@ namespace CalculatorUnitTests
             attacker.AddBombers(1, true, true);
             attacker.AddFighters(1, true, true);
             Fleet defender = FleetTestHelpers.CreateWithTestUnits(2, true, false);
-
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Attack, outcome.Winner);

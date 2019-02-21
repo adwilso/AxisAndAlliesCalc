@@ -5,143 +5,280 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="Axis and Allies Simulator" Height="404.5" Width="525">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="100*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="100"/>
-        </Grid.RowDefinitions>
-    
-        <!--Combat Controls-->
-        <Grid Grid.Row="0" Grid.Column="0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
+        Title="Axis and Allies Simulator" Height="450.5" Width="550">
+    <TabControl HorizontalAlignment="Center" Height="404.5" VerticalAlignment="Center" Width="525">
+        <TabItem Header="Ground Combat">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="100*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <!--Combat Controls-->
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        
-        
-        <Label Grid.Row="0" Grid.Column="0" Content="Attacker" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-        <Label Grid.Row ="1" Grid.Column="0" Content="Defender" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
-            <Label Content="Inf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="attInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
-            <Label Content="SInf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="attSupInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" >
-            <Label Content="Art" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="attArt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Vertical" >
-            <Label Content="Tank" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="attTank" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="5" Orientation="Vertical" >
-            <Label Content="AA" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="attAA" IsEnabled="False" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="6" Orientation="Vertical" >
-            <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="attFight" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="7" Orientation="Vertical" >
-            <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="attBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
 
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" >
-            <Label Content="Inf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="defInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" >
-            <Label Content="SInf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="defSupInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" >
-            <Label Content="Art" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="defArt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" >
-            <Label Content="Tank" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="defTank" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Vertical" >
-            <Label Content="AA" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="defAA" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="6" Orientation="Vertical" >
-            <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="defFight" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="7" Orientation="Vertical" >
-            <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="defBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-        </StackPanel>
-        <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click" />
-        <StackPanel Grid.Row="0" Grid.Column="10">
-            <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
-            <TextBox x:Name="rounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
-        </StackPanel>
-      <Button Grid.Row ="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
-    </Grid>
-        
-        <!--Results Controls-->
-        <Grid Grid.Column="0" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="60"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition  Height="10"/>
-                <RowDefinition  Height="auto"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="1" Grid.Column="0">
-                <Label Content="Attacker Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label Content="Defender Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </StackPanel>
-            
-            <StackPanel Grid.Row="1" Grid.Column="1">
-                <Label x:Name="lblAttackerWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label x:Name="lblDefenderWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label x:Name="lblTieRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </StackPanel>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Attacker" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                    <Label Grid.Row ="1" Grid.Column="0" Content="Defender" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
 
-            <StackPanel Grid.Row="1" Grid.Column="2">
-                <Label Content="Average Attacker IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label Content="Average Defender IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                        <Label Content="Inf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+                        <Label Content="SInf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attSupInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" >
+                        <Label Content="Art" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attArt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Vertical" >
+                        <Label Content="Tank" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attTank" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="5" Orientation="Vertical" >
+                        <Label Content="AA" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attAA" IsEnabled="False" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="6" Orientation="Vertical" >
+                        <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attFight" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="7" Orientation="Vertical" >
+                        <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="3">
-                <Label x:Name="lblAttackerAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label x:Name="lblDefenderAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </StackPanel>
-        </Grid>
-    </Grid>
+
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" >
+                        <Label Content="Inf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" >
+                        <Label Content="SInf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defSupInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" >
+                        <Label Content="Art" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defArt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" >
+                        <Label Content="Tank" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defTank" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Vertical" >
+                        <Label Content="AA" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defAA" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="6" Orientation="Vertical" >
+                        <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defFight" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="7" Orientation="Vertical" >
+                        <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click" />
+                    <StackPanel Grid.Row="0" Grid.Column="10">
+                        <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                        <TextBox x:Name="rounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+                    </StackPanel>
+                    <Button Grid.Row ="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
+                </Grid>
+
+                <!--Results Controls-->
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="10"/>
+                        <RowDefinition  Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <Label Content="Attacker Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Defender Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <Label x:Name="lblAttackerWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblDefenderWinRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblTieRate" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <Label Content="Average Attacker IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Average Defender IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="3">
+                        <Label x:Name="lblAttackerAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblDefenderAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Naval Combat">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+
+                <!--Combat Controls-->
+                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Attacker" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                    <Label Grid.Row ="1" Grid.Column="0" Content="Defender" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                        <Label Content="Bship" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attBattleship" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
+                        <Label Content="Cruis" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attCruiser" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical">
+                        <Label Content="Dest" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attDestroyer" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Vertical">
+                        <Label Content="Subs" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attSub" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="5" Orientation="Vertical">
+                        <Label Content="AC" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attAircraftCarrier" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="6" Orientation="Vertical">
+                        <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attFighters" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="7" Orientation="Vertical">
+                        <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="attBombers" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                        <Label Content="Bship" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defBattleship" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
+                        <Label Content="Cruis" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defCruiser" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
+                        <Label Content="Dest" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defDestroyer" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical">
+                        <Label Content="Subs" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defSub" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Vertical">
+                        <Label Content="AC" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defAircraftCarrier" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="6" Orientation="Vertical">
+                        <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defFighters" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="7" Orientation="Vertical">
+                        <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="defBombers" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                    </StackPanel>
+                    <Button x:Name="NavyFight" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click" />
+                    <StackPanel Grid.Row="0" Grid.Column="10">
+                        <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+                        <TextBox x:Name="NavalRounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+                    </StackPanel>
+                    <Button x:Name="NavyReset" Grid.Row ="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
+
+                </Grid>
+                <!--Results Controls-->
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="10"/>
+                        <RowDefinition  Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <Label Content="Attacker Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Defender Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <Label x:Name="lblAttackerWinRateNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblDefenderWinRateNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblTieRateNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <Label Content="Average Attacker IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Average Defender IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="3">
+                        <Label x:Name="lblAttackerAverageIPCLostNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblDefenderAverageIPCLostNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
