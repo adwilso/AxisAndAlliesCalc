@@ -292,6 +292,70 @@ namespace CalculatorUnitTests
             Assert.AreEqual(Posture.None, outcome.Winner);
             Assert.IsFalse(outcome.AttackerCanStillFight());
             Assert.IsFalse(outcome.DefenderCanStillFight());
+            Assert.AreEqual(2, attacker.PlanesWithoutLandingLocation());
+        }
+        [TestMethod]
+        public void Fleet_SurfaceShipsHittingSubs_AttackersWin()
+        {
+            Fleet attacker = new Fleet();
+            attacker.AddBattleships(1, true, true);
+            attacker.AddAircraftCarriers(1, true, false);
+            attacker.AddBombers(1, true, false);
+            Fleet defender = new Fleet();
+            defender.AddSubmarines(3, true, false);
+            defender.AddBattleships(3, true, false);
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Attack, outcome.Winner);
+            Assert.IsTrue(outcome.AttackerCanStillFight());
+            Assert.IsFalse(outcome.DefenderCanStillFight());
+        }
+        [TestMethod]
+        public void Fleet_SurfaceShipsHittingSubs_DefendersWin()
+        {
+            Fleet attacker = new Fleet();
+            attacker.AddSubmarines(3, true, false);
+            attacker.AddAircraftCarriers(1, true, false);
+            attacker.AddBombers(1, true, false);
+            Fleet defender = new Fleet();
+            defender.AddBattleships(3, true, true);
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Defense, outcome.Winner);
+            Assert.IsFalse(outcome.AttackerCanStillFight());
+            Assert.IsTrue(outcome.DefenderCanStillFight());
+        }
+        [TestMethod]
+        public void Fleet_PlanesHittingEverything_AttackersWin()
+        {
+            Fleet attacker = new Fleet();
+            attacker.AddAircraftCarriers(1, true, false);
+            attacker.AddDestroyers(1, true, false);
+            attacker.AddBombers(1, true, true);
+            attacker.AddFighters(1, true, true);
+            Fleet defender = FleetTestHelpers.CreateWithTestUnits(2, true, false);
+
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Attack, outcome.Winner);
+            Assert.IsTrue(outcome.AttackerCanStillFight());
+            Assert.IsFalse(outcome.DefenderCanStillFight());
+        }
+        [TestMethod]
+        public void Fleet_PlanesHittingEverything_DefendersWin()
+        {
+            Fleet defender = new Fleet();
+            defender.AddAircraftCarriers(1, true, false);
+            defender.AddDestroyers(1, true, false);
+            defender.AddBombers(1, true, true);
+            defender.AddFighters(1, true, true);
+            Fleet attacker = FleetTestHelpers.CreateWithTestUnits(2, true, false);
+
+            Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
+            IOutcome outcome = FleetOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Defense, outcome.Winner);
+            Assert.IsFalse(outcome.AttackerCanStillFight());
+            Assert.IsTrue(outcome.DefenderCanStillFight());
         }
     }
 }

@@ -228,6 +228,32 @@ namespace CalculatorUnitTests
             Assert.AreEqual(outcome.DefenderRemainingUnits(), 0);
             Assert.AreEqual(outcome.AttackerRemainingUnits(), 0);
         }
+        [TestMethod]
+        public void Outcome_FightInfantryHitEverything_AttackerWins()
+        {
+            Army attacker = new Army();
+            attacker.AddInfantry(1, true, true);
+            Army defender = TestHelpers.CreateWithTestUnits(2, true, true, false);
+            Assert.IsTrue(attacker.CanStillFight());
+            Assert.IsTrue(defender.CanStillFight());
+            IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Attack, outcome.Winner);
+            Assert.IsTrue(outcome.AttackerCanStillFight());
+            Assert.IsFalse(outcome.DefenderCanStillFight());
+        }
+        [TestMethod]
+        public void Outcome_FightInfantryHitEverything_DefenderWins()
+        {
+            Army defender = new Army();
+            defender.AddInfantry(1, true, true);
+            Army attacker = TestHelpers.CreateWithTestUnits(2, false, true, false);
+            Assert.IsTrue(attacker.CanStillFight());
+            Assert.IsTrue(defender.CanStillFight());
+            IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
+            Assert.AreEqual(Posture.Defense, outcome.Winner);
+            Assert.IsFalse(outcome.AttackerCanStillFight());
+            Assert.IsTrue(outcome.DefenderCanStillFight());
+        }
     }
     [TestClass]
     public class ResultsTrackerUnitTests

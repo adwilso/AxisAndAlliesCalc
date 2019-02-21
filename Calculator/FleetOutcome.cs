@@ -65,9 +65,8 @@ namespace Calculator
 
                 defender.RemovePlaneHits(attackerPlaneHits, attacker.HasDestroyer());
                 defender.RemoveSubmarineHits(attackerSubHits);
-                defender.RemoveSurfaceHitsAttacker(attackerSubHits);
+                defender.RemoveSurfaceHitsAttacker(attackerSurfaceHits);
             }
-
             if (!defender.CanStillFight() && attacker.CanStillFight())
             {
                 outcome.Winner = Posture.Attack;
@@ -147,7 +146,7 @@ namespace Calculator
         }
         public int AttackerRemainingUnits()
         {
-            throw new NotImplementedException();
+            return FinalAttacker.NumberOfRemainingUnits();
         }
         public bool DefenderCanStillFight()
         {
@@ -155,11 +154,11 @@ namespace Calculator
         }
         public int DefenderRemainingUnits()
         {
-            throw new NotImplementedException();
+            return FinalDefender.NumberOfRemainingUnits();
         }
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return "Attacker: " + FinalAttacker.ToString() + "Defender: " + FinalDefender.ToString();
         }
     }
 }

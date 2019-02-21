@@ -249,6 +249,15 @@ namespace Calculator
             numberOfUnits += Bombers.Count;
             return numberOfUnits;
         }
+        public int PlanesWithoutLandingLocation()
+        {
+            int retVal = NumberOfPlanes() - (AircraftCarriers.Count * 2);
+            if (retVal > 0)
+            {
+                return retVal;
+            }
+            return 0;           
+        }
         public bool HasSurfaceShips()
         {
             if (Cruisers.Count + Destroyers.Count + AircraftCarriers.Count + Battleships.Count > 0)
@@ -354,5 +363,13 @@ namespace Calculator
             }
             return hitCount;
         }
+        public override string ToString()
+        {
+            return "Battleships: " + Battleships.Count + "Cruisers: " + Cruisers.Count + 
+                "Destroyers: " + Destroyers.Count + "Aircraft Carriers: " + AircraftCarriers.Count + 
+                "Submarines: " + Submarines.Count + "Fighters: " + Fighters.Count + 
+                "Bombers: " + Bombers.Count;
+        }
     }
+
 }
