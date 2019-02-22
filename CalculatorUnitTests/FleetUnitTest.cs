@@ -356,5 +356,11 @@ namespace CalculatorUnitTests
             Assert.IsFalse(outcome.AttackerCanStillFight());
             Assert.IsTrue(outcome.DefenderCanStillFight());
         }
+        [TestMethod]
+        public void Fleet_MakeEmptyFleet()
+        {
+            Fleet fleet = FleetTestHelpers.CreateWithTestUnits(0, false, false);
+            Assert.IsFalse(fleet.CanStillFight());
+        }
     }
 }

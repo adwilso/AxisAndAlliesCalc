@@ -39,41 +39,33 @@ namespace Calculator
 
      public partial class MainWindow : Window
     {
+        SimulatorController controller;
         public MainWindow()
         {
             InitializeComponent();
             ResetUI();
+            controller = new SimulatorController(this);
         }
 
         public void debug(string text)
         {
            //Debug.WriteLine(text);
         }
-
+        private void ProcessingFight()
+        {
+            NavyFight.IsEnabled = false;
+        }
+        private void FinishedProcessing()
+        {
+            NavyFight.IsEnabled = true;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //You always have to kill infantry before artillery. 
-            //That means I don't have to detect if infantry become unsupported
-            //midway through an attack
-            Army attackers = new Army();
-            Army defenders = new Army();
-            int rounds = GetRounds();            
-
-            ResultsTracker results = new ResultsTracker();
-            for (int i = 0; i < rounds; i++)
-            {
-                attackers = new Army();
-                defenders = new Army();
-                GetAttackers(attackers);
-                GetDefenders(defenders);
-                var outcome = ArmyOutcome.Fight(attackers, defenders);
-                results.Outcomes.Add(outcome);
-            }
-
-            OutputStats(results);
+            ProcessingFight();
+            controller.ArmyFight();
+            FinishedProcessing();
         }
-
-        private void OutputStats(ResultsTracker results)
+        public void OutputArmyStats(ResultsTracker results)
         {
             lblAttackerWinRate.Content = results.AttackerWinRate + "%";
             lblDefenderWinRate.Content = results.DefenderWinRate + "%";
@@ -88,15 +80,28 @@ namespace Calculator
 
             Debug.WriteLine("========================================================");
         }
+        public void OutputNavyStats(ResultsTracker results)
+        {
+            lblAttackerWinRateNavy.Content = results.AttackerWinRate + "%";
+            lblDefenderWinRateNavy.Content = results.DefenderWinRate + "%";
+            lblTieRateNavy.Content = results.TieRate + "%";
+            lblAttackerAverageIPCLostNavy.Content = results.AverageAttackerIPCLost();
+            lblDefenderAverageIPCLostNavy.Content = results.AverageDefenderIPCLost();
 
+            Debug.WriteLine("Defender Wins: " + results.DefenderWins + " Percentage: " + results.DefenderWins / results.TotalFights);
+            Debug.WriteLine("Defender Average Losses: " + results.DefenderIPCLost / results.TotalFights);
+            Debug.WriteLine("Attacker Wins: " + results.AttackerWins + " Percentage: " + results.AttackerWins / results.TotalFights);
+            Debug.WriteLine("Attacker Average Losses: " + results.AttackerIPCLost / results.TotalFights);
 
-        private int GetRounds()
+            Debug.WriteLine("========================================================");
+        }
+        public int GetRounds()
         {
             return Int32.Parse(rounds.Text);            
         }
-
-        private void GetAttackers(Army attackers)
+        public Army GetArmyAttackers()
         {
+            Army attackers = new Army();
             //We are throwing on bad input. Way easier in V1
             int unitCount= Int32.Parse(attInf.Text);
             attackers.AddInfantry(unitCount);            
@@ -116,11 +121,11 @@ namespace Calculator
             unitCount = Int32.Parse(attBomb.Text);
             attackers.AddBombers(unitCount);
 
-            return;
+            return attackers;
         }
-
-        private void GetDefenders(Army defenders)
+        public Army GetArmyDefenders()
         {
+            Army defenders = new Army();
             //We are throwing on bad input. Way easier in V1
             Int32 unitCount = Int32.Parse(defInf.Text);
             defenders.AddInfantry(unitCount);            
@@ -144,11 +149,51 @@ namespace Calculator
             unitCount = Int32.Parse(defBomb.Text);
             defenders.AddBombers(unitCount);
 
-            return;
+            return defenders;
         }
-
-        private void ResetUI()
+        public Fleet GetNavyAttackers()
         {
+            Fleet attacker = new Fleet();            
+            attacker.AddBattleships(int.Parse(attBattleship.Text));
+            attacker.AddCruisers(int.Parse(attCruiser.Text));
+            attacker.AddDestroyers(int.Parse(attDestroyer.Text));
+            attacker.AddSubmarines(int.Parse(attSub.Text));
+            attacker.AddAircraftCarriers(int.Parse(attAircraftCarrier.Text));
+            attacker.AddFighters(int.Parse(attFighters.Text));
+            attacker.AddBombers(int.Parse(attBombers.Text));
+            return attacker;
+        }
+        public Fleet GetNavyDefenders()
+        {
+            Fleet defender = new Fleet();
+            defender.AddBattleships(int.Parse(defBattleship.Text));
+            defender.AddCruisers(int.Parse(defCruiser.Text));
+            defender.AddDestroyers(int.Parse(defDestroyer.Text));
+            defender.AddSubmarines(int.Parse(defSub.Text));
+            defender.AddAircraftCarriers(int.Parse(defAircraftCarrier.Text));
+            defender.AddFighters(int.Parse(defFighters.Text));
+            defender.AddBombers(int.Parse(defBombers.Text));
+            return defender;
+        }
+        public void ResetUI()
+        {
+            defBattleship.Text = "0";
+            defCruiser.Text = "0";
+            defDestroyer.Text = "0";
+            defSub.Text = "0";
+            defAircraftCarrier.Text = "0";
+            defFighters.Text = "0";
+            defBombers.Text = "0";
+
+            attBattleship.Text = "0";
+            attCruiser.Text = "0";
+            attDestroyer.Text = "0";
+            attSub.Text = "0";
+            attAircraftCarrier.Text = "0";
+            attFighters.Text = "0";
+            attBombers.Text = "0";
+
+
             defInf.Text = "0";
             defSupInf.Text = "0";
             defArt.Text = "0";
@@ -167,18 +212,22 @@ namespace Calculator
 
             rounds.Text = "10000";
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-
 ///     <summary>
 ///     When this is clicked, reset the UI back to the starting positions
 ///     </summary>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             ResetUI();
+        }
+        private void NavyFight_Click(object sender, RoutedEventArgs e)
+        {
+            ProcessingFight();
+            controller.NavyFight();
+            FinishedProcessing();
         }
     }
 }

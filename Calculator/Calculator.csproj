@@ -59,6 +59,7 @@
     <Compile Include="IOutcome.cs" />
     <Compile Include="ArmyOutcome.cs" />
     <Compile Include="ResultsTracker.cs" />
+    <Compile Include="SimulatorController.cs" />
     <Compile Include="Units.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -19,7 +19,7 @@ namespace Calculator
 
         private void debug(string input)
         {
-            System.Diagnostics.Debug.WriteLine(input);
+            //System.Diagnostics.Debug.WriteLine(input);
         }
         public Fleet()
         {
@@ -88,7 +88,11 @@ namespace Calculator
         }
         public void AddFighters(int count, bool isTest = false, bool alwaysHit = false)
         {
-            if (count < 1 || !CanAddPlanes(count))
+            if (count <= 0)
+            {
+                return;
+            }
+            if (!CanAddPlanes(count))
             {
                 throw new Exception("Can't add more planes"); 
             }
@@ -99,7 +103,11 @@ namespace Calculator
         }
         public void AddBombers(int count, bool isTest = false, bool alwaysHit = false)
         {
-            if (count < 1 || !CanAddPlanes(count))
+            if (count <= 0)
+            {
+                return; 
+            }
+            if (!CanAddPlanes(count))
             {
                 throw new Exception("Can't add more planes");                
             }

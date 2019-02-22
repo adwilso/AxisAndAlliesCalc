@@ -154,7 +154,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <!--Combat Controls-->
@@ -236,7 +236,7 @@
                         <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="defBombers" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <Button x:Name="NavyFight" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click" />
+                    <Button x:Name="NavyFight" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="NavyFight_Click" />
                     <StackPanel Grid.Row="0" Grid.Column="10">
                         <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
                         <TextBox x:Name="NavalRounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
@@ -260,12 +260,14 @@
                         <Label Content="Attacker Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label Content="Defender Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Stalemate" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <Label x:Name="lblAttackerWinRateNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="lblDefenderWinRateNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="lblTieRateNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblStalemateRateNavy" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="2">
