@@ -69,6 +69,7 @@ namespace Calculator
                     ComputeResults();
                 }
                 return defenderIPCLost;
+                //return outcomes.Sum(x => x.FinalDefenderLosses);
             }
             private set
             {

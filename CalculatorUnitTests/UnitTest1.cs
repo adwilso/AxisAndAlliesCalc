@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Calculator;
+using System.Reflection;
+
 namespace CalculatorUnitTests
 {
     public class TestHelpers
@@ -172,7 +174,7 @@ namespace CalculatorUnitTests
             Army defender = new Army();
             defender.AddInfantry(1, true, false);
             defender.AddAA(1, true, true);
-            Army attacker = CreateWithPlanes(1, 2);
+            Army attacker = CreateWithPlanes(1, 2);            
 
             Assert.IsTrue(defender.CanStillFight());
             Assert.IsTrue(attacker.CanStillFight());
@@ -193,6 +195,38 @@ namespace CalculatorUnitTests
             IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
             Assert.IsFalse(defender.CanStillFight());
             Assert.IsTrue(attacker.CanStillFight());
+        }
+        [DataTestMethod]
+        [DataRow(typeof(AA), "AddAA", 1)]
+        [DataRow(typeof(Infantry), "AddInfantry", 1)]
+        [DataRow(typeof(SupportedInfantry), "AddSupportedInfantry", 1)]
+        [DataRow(typeof(Artillery), "AddArtillery", 1)]
+        [DataRow(typeof(Tank), "AddTanks", 1)]
+        [DataRow(typeof(Fighter), "AddFighters", 1)]
+        [DataRow(typeof(Bomber), "AddBombers", 1)]
+        [DataRow(typeof(AA), "AddAA", 10)]
+        [DataRow(typeof(Infantry), "AddInfantry", 10)]
+        [DataRow(typeof(SupportedInfantry), "AddSupportedInfantry", 10)]
+        [DataRow(typeof(Artillery), "AddArtillery", 10)]
+        [DataRow(typeof(Tank), "AddTanks", 10)]
+        [DataRow(typeof(Fighter), "AddFighters", 10)]
+        [DataRow(typeof(Bomber), "AddBombers", 10)]
+        [DataRow(typeof(AA), "AddAA", 0)]
+        [DataRow(typeof(Infantry), "AddInfantry", 0)]
+        [DataRow(typeof(SupportedInfantry), "AddSupportedInfantry", 0)]
+        [DataRow(typeof(Artillery), "AddArtillery", 0)]
+        [DataRow(typeof(Tank), "AddTanks", 0)]
+        [DataRow(typeof(Fighter), "AddFighters", 0)]
+        [DataRow(typeof(Bomber), "AddBombers", 0)]
+        public void Army_IPCCountTest(Type unitType, string addMethodName, int unitsToAdd)
+        {
+            Unit unit = null;
+            unit = Activator.CreateInstance(unitType, new object[] { false, false }) as Unit;
+            Army army = new Army();
+            Type t = typeof(Army);
+            MethodInfo addMethod = t.GetMethod(addMethodName);
+            addMethod.Invoke(army, new object[] { unitsToAdd, false, false });
+            Assert.AreEqual(unitsToAdd * unit.IpcValue, army.CurrentIpcValue());
         }
     }
     [TestClass]

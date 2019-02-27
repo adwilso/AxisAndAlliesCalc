@@ -218,7 +218,20 @@ namespace Calculator
             }
             return hitCount;
         }
-
+        public int CurrentIpcValue()
+        {
+            int currentValue = 0;
+            ///Multiply by IPC value, or 0 if there are no units of that type
+            ///This code would be bettter if the IPC value is static, but this works
+            currentValue += AA.Count * ((AA.Count > 0)? AA.First().IpcValue : 0);
+            currentValue += Infantry.Count * ((Infantry.Count > 0) ? Infantry.First().IpcValue : 0);
+            currentValue += SupportedInfantry.Count * ((SupportedInfantry.Count > 0) ? SupportedInfantry.First().IpcValue : 0);
+            currentValue += Artillery.Count * ((Artillery.Count > 0) ? Artillery.First().IpcValue : 0);
+            currentValue += Tanks.Count * ((Tanks.Count > 0) ? Tanks.First().IpcValue : 0);
+            currentValue += Bombers.Count * ((Bombers.Count > 0) ? Bombers.First().IpcValue : 0);
+            currentValue += Fighters.Count * ((Fighters.Count > 0) ? Fighters.First().IpcValue : 0);
+            return currentValue;
+        }
         public int NumberOfRemainingUnits()
         {
             int totalUnits = 0;

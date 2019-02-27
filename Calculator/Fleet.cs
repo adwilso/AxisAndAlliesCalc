@@ -245,6 +245,18 @@ namespace Calculator
             }
             return  hitCount;
         }
+        public int CurrentIpcValue()
+        {
+            int currentValue = 0;
+            currentValue += Cruisers.Count * ((Cruisers.Count > 0) ? Cruisers.First().IpcValue : 0);
+            currentValue += Destroyers.Count * ((Destroyers.Count > 0) ? Destroyers.First().IpcValue : 0);
+            currentValue += Battleships.Count * ((Battleships.Count > 0) ? Battleships.First().IpcValue : 0);
+            currentValue += AircraftCarriers.Count * ((AircraftCarriers.Count > 0) ? AircraftCarriers.First().IpcValue : 0);
+            currentValue += Submarines.Count * ((Submarines.Count > 0) ? Submarines.First().IpcValue : 0);
+            currentValue += Fighters.Count * ((Fighters.Count > 0) ? Fighters.First().IpcValue : 0);
+            currentValue += Bombers.Count * ((Bombers.Count > 0) ? Bombers.First().IpcValue : 0);
+            return currentValue;
+        }
         public int NumberOfRemainingUnits()
         {
             int numberOfUnits = 0;
