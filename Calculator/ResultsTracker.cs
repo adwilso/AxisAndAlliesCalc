@@ -45,31 +45,22 @@ namespace Calculator
                 totalFights = value;
             }
         }
-        public double AttackerIPCLost
+        public double TotalAttackerIPCLost
         {
             get
             {
-                if (dirtyCache)
-                {
-                    ComputeResults();
-                }
-                return attackerIPCLost;
+                return outcomes.Sum(x => x.AttackerIpcLosses);                
             }
             private set
             {
                 attackerIPCLost = value;
             }
         }
-        public double DefenderIPCLost
+        public double TotalDefenderIPCLost
         {
             get
             {
-                if (dirtyCache)
-                {
-                    ComputeResults();
-                }
-                return defenderIPCLost;
-                //return outcomes.Sum(x => x.FinalDefenderLosses);
+                return outcomes.Sum(x => x.DefenderIpcLosses);                
             }
             private set
             {
@@ -80,11 +71,8 @@ namespace Calculator
         {
             get
             {
-                if (dirtyCache)
-                {
-                    ComputeResults();
-                }
-                return defenderWins;
+                var list = from outcome in outcomes where outcome.Winner == Posture.Defense select outcome;
+                return list.Count();
             }
             private set
             {
@@ -160,17 +148,17 @@ namespace Calculator
         }
         public double AverageAttackerIPCLost()
         {
-            return AttackerIPCLost / TotalFights;
+            return TotalAttackerIPCLost / TotalFights;
         }
         public double AverageDefenderIPCLost()
         {
-            return DefenderIPCLost / TotalFights;
+            return TotalDefenderIPCLost / TotalFights;
         }
         private void ComputeResults()
         {
             TotalFights = 0;
-            AttackerIPCLost = 0;
-            DefenderIPCLost = 0;
+            TotalAttackerIPCLost = 0;
+            TotalDefenderIPCLost = 0;
             DefenderWins = 0;
             AttackerWins = 0;
             Ties = 0;
@@ -180,8 +168,7 @@ namespace Calculator
             foreach (var outcome in outcomes)
             {
                 TotalFights += 1;
-                DefenderIPCLost += outcome.FinalDefenderLosses;
-                AttackerIPCLost += outcome.FinalAttackerLosses;
+
                 if (outcome.Winner == Posture.Attack)
                 {
                     AttackerWins += 1;

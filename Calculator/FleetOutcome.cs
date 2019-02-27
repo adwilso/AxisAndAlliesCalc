@@ -122,14 +122,14 @@ namespace Calculator
             //Defaulting out if they can't hit each other
             return false;
         }
-        public double FinalAttackerLosses
+        public double AttackerIpcLosses
         {
             get
             {
                 return FinalAttacker.IPCLosses;
             }
         }
-        public double FinalDefenderLosses
+        public double DefenderIpcLosses
         {
             get
             {
@@ -140,21 +140,61 @@ namespace Calculator
         {
             get; private set;
         }
-        public bool AttackerCanStillFight()
+
+        public double AttackerNumberOfUnits
         {
-            return FinalAttacker.CanStillFight();
+            get
+            {
+                return FinalAttacker.NumberOfRemainingUnits();
+            }
+        }        
+        public double DefenderNumberOfUnits
+        {
+            get
+            {
+                return FinalDefender.NumberOfRemainingUnits();
+            }
         }
-        public int AttackerRemainingUnits()
+        public double DefenderIpcRemaining
         {
-            return FinalAttacker.NumberOfRemainingUnits();
+            get
+            {
+                return FinalDefender.CurrentIpcValue();
+            }
         }
-        public bool DefenderCanStillFight()
-        {
-            return FinalDefender.CanStillFight();
+        public double AttackerIpcRemaining {
+            get
+            {
+                return FinalAttacker.CurrentIpcValue();
+            }
         }
-        public int DefenderRemainingUnits()
+        public bool AttackerCanStillFight
         {
-            return FinalDefender.NumberOfRemainingUnits();
+            get
+            { 
+                return FinalAttacker.CanStillFight();
+            }
+        }
+        public int AttackerRemainingUnits
+        {
+            get
+            {
+                return FinalAttacker.NumberOfRemainingUnits();
+            }
+        }
+        public bool DefenderCanStillFight
+        {
+            get
+            {
+                return FinalDefender.CanStillFight();
+            }
+        }
+        public int DefenderRemainingUnits
+        {
+            get
+            {
+                return FinalDefender.NumberOfRemainingUnits();
+            }
         }
         public override string ToString()
         {

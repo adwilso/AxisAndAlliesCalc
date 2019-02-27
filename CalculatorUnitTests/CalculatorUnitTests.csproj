@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FleetUnitTest.cs" />
+    <Compile Include="OutcomeMock.cs" />
+    <Compile Include="ResultsTrackerUnitTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

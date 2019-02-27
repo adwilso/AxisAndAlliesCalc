@@ -2,13 +2,17 @@
 {
     public interface IOutcome
     {
-        double FinalAttackerLosses { get; }
-        double FinalDefenderLosses { get; }
+        double AttackerIpcLosses { get; }
+        double DefenderIpcLosses { get; }
+        double DefenderIpcRemaining { get; }
+        double AttackerIpcRemaining { get; }
+        double AttackerNumberOfUnits { get; }
+        double DefenderNumberOfUnits { get; }
         int Winner { get; }
-        bool AttackerCanStillFight();
-        bool DefenderCanStillFight();
-        int AttackerRemainingUnits();
-        int DefenderRemainingUnits();
+        bool AttackerCanStillFight { get; }
+        bool DefenderCanStillFight { get; }
+        int AttackerRemainingUnits { get; }
+        int DefenderRemainingUnits { get; }
         string ToString();
     }
 }

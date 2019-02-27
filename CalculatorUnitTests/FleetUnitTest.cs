@@ -301,8 +301,8 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Attack, outcome.Winner);
-            Assert.IsTrue(outcome.AttackerCanStillFight());
-            Assert.IsFalse(outcome.DefenderCanStillFight());
+            Assert.IsTrue(outcome.AttackerCanStillFight);
+            Assert.IsFalse(outcome.DefenderCanStillFight);
         }
         [TestMethod]
         public void Fleet_DefendersWin_FullFleet()
@@ -312,8 +312,8 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Defense, outcome.Winner);
-            Assert.IsFalse(outcome.AttackerCanStillFight());
-            Assert.IsTrue(outcome.DefenderCanStillFight());
+            Assert.IsFalse(outcome.AttackerCanStillFight);
+            Assert.IsTrue(outcome.DefenderCanStillFight);
         }
         [TestMethod]
         public void Fleet_SubsVsPlanes_Stalemate()
@@ -326,8 +326,8 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Stalemate, outcome.Winner);
-            Assert.IsTrue(outcome.AttackerCanStillFight());
-            Assert.IsTrue(outcome.DefenderCanStillFight());
+            Assert.IsTrue(outcome.AttackerCanStillFight);
+            Assert.IsTrue(outcome.DefenderCanStillFight);
             Assert.AreEqual(2, attacker.PlanesWithoutLandingLocation());
         }
         [TestMethod]
@@ -342,10 +342,10 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.None, outcome.Winner);
-            Assert.IsFalse(outcome.AttackerCanStillFight());
-            Assert.IsFalse(outcome.DefenderCanStillFight());
-            Assert.AreEqual(intialAttackerIPC, outcome.FinalAttackerLosses);
-            Assert.AreEqual(intialDefenderIPC, outcome.FinalDefenderLosses);
+            Assert.IsFalse(outcome.AttackerCanStillFight);
+            Assert.IsFalse(outcome.DefenderCanStillFight);
+            Assert.AreEqual(intialAttackerIPC, outcome.AttackerIpcLosses);
+            Assert.AreEqual(intialDefenderIPC, outcome.DefenderIpcLosses);
         }
         [TestMethod]
         public void Fleet_SurfaceShipsHittingSubs_AttackersWin()
@@ -362,10 +362,10 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Attack, outcome.Winner);
-            Assert.IsTrue(outcome.AttackerCanStillFight());
-            Assert.IsFalse(outcome.DefenderCanStillFight());
-            Assert.AreEqual(intialDefenderIPC, outcome.FinalDefenderLosses + defender.CurrentIpcValue());
-            Assert.AreEqual(intialAttackerIPC, outcome.FinalAttackerLosses + attacker.CurrentIpcValue());
+            Assert.IsTrue(outcome.AttackerCanStillFight);
+            Assert.IsFalse(outcome.DefenderCanStillFight);
+            Assert.AreEqual(intialDefenderIPC, outcome.DefenderIpcLosses + defender.CurrentIpcValue());
+            Assert.AreEqual(intialAttackerIPC, outcome.AttackerIpcLosses + attacker.CurrentIpcValue());
         }
         [TestMethod]
         public void Fleet_SurfaceShipsHittingSubs_DefendersWin()
@@ -381,10 +381,10 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Defense, outcome.Winner);
-            Assert.IsFalse(outcome.AttackerCanStillFight());
-            Assert.IsTrue(outcome.DefenderCanStillFight());
-            Assert.AreEqual(intialDefenderIPC, outcome.FinalDefenderLosses + defender.CurrentIpcValue());
-            Assert.AreEqual(intialAttackerIPC, outcome.FinalAttackerLosses + attacker.CurrentIpcValue());
+            Assert.IsFalse(outcome.AttackerCanStillFight);
+            Assert.IsTrue(outcome.DefenderCanStillFight);
+            Assert.AreEqual(intialDefenderIPC, outcome.DefenderIpcLosses + defender.CurrentIpcValue());
+            Assert.AreEqual(intialAttackerIPC, outcome.AttackerIpcLosses + attacker.CurrentIpcValue());
         }
         [TestMethod]
         public void Fleet_PlanesHittingEverything_AttackersWin()
@@ -401,10 +401,10 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Attack, outcome.Winner);
-            Assert.IsTrue(outcome.AttackerCanStillFight());
-            Assert.IsFalse(outcome.DefenderCanStillFight());
-            Assert.AreEqual(intialDefenderIPC, outcome.FinalDefenderLosses + defender.CurrentIpcValue());
-            Assert.AreEqual(intialAttackerIPC, outcome.FinalAttackerLosses + attacker.CurrentIpcValue());
+            Assert.IsTrue(outcome.AttackerCanStillFight);
+            Assert.IsFalse(outcome.DefenderCanStillFight);
+            Assert.AreEqual(intialDefenderIPC, outcome.DefenderIpcLosses + defender.CurrentIpcValue());
+            Assert.AreEqual(intialAttackerIPC, outcome.AttackerIpcLosses + attacker.CurrentIpcValue());
         }
         [TestMethod]
         public void Fleet_PlanesHittingEverything_DefendersWin()
@@ -421,10 +421,10 @@ namespace CalculatorUnitTests
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Defense, outcome.Winner);
-            Assert.IsFalse(outcome.AttackerCanStillFight());
-            Assert.IsTrue(outcome.DefenderCanStillFight());
-            Assert.AreEqual(intialDefenderIPC, outcome.FinalDefenderLosses + defender.CurrentIpcValue());
-            Assert.AreEqual(intialAttackerIPC, outcome.FinalAttackerLosses + attacker.CurrentIpcValue());
+            Assert.IsFalse(outcome.AttackerCanStillFight);
+            Assert.IsTrue(outcome.DefenderCanStillFight);
+            Assert.AreEqual(intialDefenderIPC, outcome.DefenderIpcLosses + defender.CurrentIpcValue());
+            Assert.AreEqual(intialAttackerIPC, outcome.AttackerIpcLosses + attacker.CurrentIpcValue());
         }
         [TestMethod]
         public void Fleet_MakeEmptyFleet()

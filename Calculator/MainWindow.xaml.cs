@@ -74,9 +74,9 @@ namespace Calculator
             lblDefenderAverageIPCLost.Content = results.AverageDefenderIPCLost();
 
             Debug.WriteLine("Defender Wins: " + results.DefenderWins + " Percentage: " + results.DefenderWins / results.TotalFights);
-            Debug.WriteLine("Defender Average Losses: " + results.DefenderIPCLost / results.TotalFights);
+            Debug.WriteLine("Defender Average Losses: " + results.TotalDefenderIPCLost / results.TotalFights);
             Debug.WriteLine("Attacker Wins: " + results.AttackerWins + " Percentage: " + results.AttackerWins / results.TotalFights);
-            Debug.WriteLine("Attacker Average Losses: " + results.AttackerIPCLost / results.TotalFights);
+            Debug.WriteLine("Attacker Average Losses: " + results.TotalAttackerIPCLost / results.TotalFights);
 
             Debug.WriteLine("========================================================");
         }
@@ -89,9 +89,9 @@ namespace Calculator
             lblDefenderAverageIPCLostNavy.Content = results.AverageDefenderIPCLost();
 
             Debug.WriteLine("Defender Wins: " + results.DefenderWins + " Percentage: " + results.DefenderWins / results.TotalFights);
-            Debug.WriteLine("Defender Average Losses: " + results.DefenderIPCLost / results.TotalFights);
+            Debug.WriteLine("Defender Average Losses: " + results.TotalDefenderIPCLost / results.TotalFights);
             Debug.WriteLine("Attacker Wins: " + results.AttackerWins + " Percentage: " + results.AttackerWins / results.TotalFights);
-            Debug.WriteLine("Attacker Average Losses: " + results.AttackerIPCLost / results.TotalFights);
+            Debug.WriteLine("Attacker Average Losses: " + results.TotalAttackerIPCLost / results.TotalFights);
 
             Debug.WriteLine("========================================================");
         }

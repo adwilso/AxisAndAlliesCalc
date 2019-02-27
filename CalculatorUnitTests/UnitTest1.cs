@@ -7,6 +7,7 @@ namespace CalculatorUnitTests
 {
     public class TestHelpers
     {
+        public static Random rnd = new Random();        
         public static Army CreateWithUnits(int count, bool includeAA)
         {
             return CreateWithTestUnits(count, includeAA, false, false);
@@ -40,10 +41,39 @@ namespace CalculatorUnitTests
             return ArmyOutcome.Fight(attacker, defender);
         }
         public static IOutcome CreateTie()
-        {
+        {            
             Army attacker = TestHelpers.CreateWithTestUnits(1, false, true, true);
             Army defender = TestHelpers.CreateWithTestUnits(1, false, true, true);
             return ArmyOutcome.Fight(attacker, defender);
+        }
+        public static int SetPropertyAndReturnRemainder(Action<int> t, int maxValue)
+        {
+            int value = rnd.Next(0, maxValue);
+            t.Invoke(value);
+            return maxValue - value;
+        }
+        /*
+        public static int SetPropertyAndReturnRemainder(Action<double> t, int maxValue)
+        {
+            int value = rnd.Next(0, maxValue);
+            t.Invoke(value);
+            return maxValue - value;
+        }*/
+        public static OutcomeMock CreateOutcomeWithBogusData()
+        {
+            OutcomeMock outcome = new OutcomeMock();
+            outcome.AttackerIpcLosses = 0;
+            outcome.DefenderIpcLosses = 0;
+            outcome.DefenderIpcRemaining = 0;
+            outcome.AttackerIpcRemaining = 0;
+            outcome.AttackerNumberOfUnits = 0;
+            outcome.DefenderNumberOfUnits = 0;
+            outcome.Winner = Posture.None;
+            outcome.AttackerCanStillFight = false;
+            outcome.DefenderCanStillFight = false;
+            outcome.AttackerRemainingUnits = 0;
+            outcome.DefenderRemainingUnits = 0;
+            return outcome; 
         }
     }
     [TestClass]
@@ -237,30 +267,30 @@ namespace CalculatorUnitTests
         {
             IOutcome outcome = TestHelpers.CreateAttackerWin();
 
-            Assert.IsTrue(outcome.AttackerCanStillFight());
-            Assert.IsFalse(outcome.DefenderCanStillFight());
-            Assert.AreEqual(outcome.DefenderRemainingUnits(), 0);
-            Assert.AreNotEqual(outcome.AttackerRemainingUnits(), 0);
+            Assert.IsTrue(outcome.AttackerCanStillFight);
+            Assert.IsFalse(outcome.DefenderCanStillFight);
+            Assert.AreEqual(outcome.DefenderRemainingUnits, 0);
+            Assert.AreNotEqual(outcome.AttackerRemainingUnits, 0);
         }
         [TestMethod]
         public void Outcome_FightFindWinner_DefenderWins()
         {
             IOutcome outcome = TestHelpers.CreateDefenderWin();
 
-            Assert.IsFalse(outcome.AttackerCanStillFight());
-            Assert.IsTrue(outcome.DefenderCanStillFight());
-            Assert.AreNotEqual(outcome.DefenderRemainingUnits(), 0);
-            Assert.AreEqual(outcome.AttackerRemainingUnits(), 0);
+            Assert.IsFalse(outcome.AttackerCanStillFight);
+            Assert.IsTrue(outcome.DefenderCanStillFight);
+            Assert.AreNotEqual(outcome.DefenderRemainingUnits, 0);
+            Assert.AreEqual(outcome.AttackerRemainingUnits, 0);
         }
         [TestMethod]
         public void Outcome_FightFindWinner_Tie()
         {
             IOutcome outcome = TestHelpers.CreateTie();
 
-            Assert.IsFalse(outcome.AttackerCanStillFight());
-            Assert.IsFalse(outcome.DefenderCanStillFight());
-            Assert.AreEqual(outcome.DefenderRemainingUnits(), 0);
-            Assert.AreEqual(outcome.AttackerRemainingUnits(), 0);
+            Assert.IsFalse(outcome.AttackerCanStillFight);
+            Assert.IsFalse(outcome.DefenderCanStillFight);
+            Assert.AreEqual(outcome.DefenderRemainingUnits, 0);
+            Assert.AreEqual(outcome.AttackerRemainingUnits, 0);
         }
         [TestMethod]
         public void Outcome_FightInfantryHitEverything_AttackerWins()
@@ -272,8 +302,8 @@ namespace CalculatorUnitTests
             Assert.IsTrue(defender.CanStillFight());
             IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Attack, outcome.Winner);
-            Assert.IsTrue(outcome.AttackerCanStillFight());
-            Assert.IsFalse(outcome.DefenderCanStillFight());
+            Assert.IsTrue(outcome.AttackerCanStillFight);
+            Assert.IsFalse(outcome.DefenderCanStillFight);
         }
         [TestMethod]
         public void Outcome_FightInfantryHitEverything_DefenderWins()
@@ -285,62 +315,8 @@ namespace CalculatorUnitTests
             Assert.IsTrue(defender.CanStillFight());
             IOutcome outcome = ArmyOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Defense, outcome.Winner);
-            Assert.IsFalse(outcome.AttackerCanStillFight());
-            Assert.IsTrue(outcome.DefenderCanStillFight());
-        }
-    }
-    [TestClass]
-    public class ResultsTrackerUnitTests
-    {
-        [TestMethod]
-        public void ResultsTracker_AttackerWinsAll()
-        {
-            ResultsTracker results = new ResultsTracker();
-            results.Outcomes.Add(TestHelpers.CreateAttackerWin());
-            results.Outcomes.Add(TestHelpers.CreateAttackerWin());
-            results.Outcomes.Add(TestHelpers.CreateAttackerWin());
-
-            Assert.AreEqual(results.AttackerWins, 3);
-            Assert.AreEqual(results.AttackerIPCLost, 0);
-            Assert.AreEqual(results.AttackerWinRate, 100);
-            Assert.AreEqual(results.DefenderWinRate, 0);
-            Assert.AreEqual(results.DefenderWins, 0);
-            Assert.AreEqual(results.TieRate, 0.0);
-            Assert.AreEqual(results.Ties, 0);
-            Assert.AreEqual(results.TotalFights, 3);
-        }
-        [TestMethod]
-        public void ResultsTracker_DefenderWinsAll()
-        {
-            ResultsTracker results = new ResultsTracker();
-            results.Outcomes.Add(TestHelpers.CreateDefenderWin());
-            results.Outcomes.Add(TestHelpers.CreateDefenderWin());
-            results.Outcomes.Add(TestHelpers.CreateDefenderWin());
-
-            Assert.AreEqual(results.AttackerWins, 0);
-            Assert.AreEqual(results.DefenderIPCLost, 0);
-            Assert.AreEqual(results.AttackerWinRate, 0.0);
-            Assert.AreEqual(results.DefenderWinRate, 100);
-            Assert.AreEqual(results.DefenderWins, 3);
-            Assert.AreEqual(results.TieRate, 0.0);
-            Assert.AreEqual(results.Ties, 0);
-            Assert.AreEqual(results.TotalFights, 3);
-        }
-        [TestMethod]
-        public void ResultsTracker_TieAll()
-        {
-            ResultsTracker results = new ResultsTracker();
-            results.Outcomes.Add(TestHelpers.CreateTie());
-            results.Outcomes.Add(TestHelpers.CreateTie());
-            results.Outcomes.Add(TestHelpers.CreateTie());
-
-            Assert.AreEqual(results.AttackerWins, 0);
-            Assert.AreEqual(results.AttackerWinRate, 0.0);
-            Assert.AreEqual(results.DefenderWinRate, 0.0);
-            Assert.AreEqual(results.DefenderWins, 0);
-            Assert.AreEqual(results.TieRate, 100);
-            Assert.AreEqual(results.Ties, 3);
-            Assert.AreEqual(results.TotalFights, 3);
+            Assert.IsFalse(outcome.AttackerCanStillFight);
+            Assert.IsTrue(outcome.DefenderCanStillFight);
         }
     }
 }

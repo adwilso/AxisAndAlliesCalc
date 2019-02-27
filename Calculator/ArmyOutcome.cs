@@ -14,35 +14,76 @@ namespace Calculator
         {
             get; private set;
         }
-        public double FinalAttackerLosses
+        public double AttackerIpcLosses
         {
             get
             {
                 return FinalAttacker.Losses;
             }
         }
-        public double FinalDefenderLosses
+        public double DefenderIpcLosses
         {
             get
             {
                 return FinalDefender.Losses;
             }
         }
-        public bool AttackerCanStillFight()
+
+        public double AttackerNumberOfUnits
         {
-            return FinalAttacker.CanStillFight();
+            get
+            {
+                return FinalAttacker.NumberOfRemainingUnits();
+            }
         }
-        public bool DefenderCanStillFight()
+        public double DefenderNumberOfUnits
         {
-            return FinalDefender.CanStillFight();
+            get
+            {
+                return FinalDefender.NumberOfRemainingUnits();
+            }
         }
-        public int AttackerRemainingUnits()
+        public double DefenderIpcRemaining
         {
-            return FinalAttacker.NumberOfRemainingUnits();
+            get
+            {
+                return FinalDefender.CurrentIpcValue();
+            }
         }
-        public int DefenderRemainingUnits()
+        public double AttackerIpcRemaining
         {
-            return FinalDefender.NumberOfRemainingUnits();
+            get
+            {
+                return FinalAttacker.CurrentIpcValue();
+            }
+        }
+        public bool AttackerCanStillFight
+        {
+            get
+            { 
+                return FinalAttacker.CanStillFight();
+            }
+        }
+        public bool DefenderCanStillFight
+        {
+            get
+            {
+                return FinalDefender.CanStillFight();
+            }
+        }
+        public int AttackerRemainingUnits
+        {
+            get
+            {
+                return FinalAttacker.NumberOfRemainingUnits();
+            }
+        }
+        public int DefenderRemainingUnits
+        {
+            get
+            {
+                return FinalDefender.NumberOfRemainingUnits();
+            }
         }
         //Hook the debug output so I can choose who gets to log
         private static void debug(string input)
