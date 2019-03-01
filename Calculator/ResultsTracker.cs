@@ -71,8 +71,7 @@ namespace Calculator
         {
             get
             {
-                var list = from outcome in outcomes where outcome.Winner == Posture.Defense select outcome;
-                return list.Count();
+                return outcomes.Count(x => x.Winner == Posture.Defense);
             }
             private set
             {
@@ -83,11 +82,7 @@ namespace Calculator
         {
             get
             {
-                if (dirtyCache)
-                {
-                    ComputeResults();
-                }
-                return attackerWins;
+                return outcomes.Count(x => x.Winner == Posture.Attack);                
             }
             private set
             {

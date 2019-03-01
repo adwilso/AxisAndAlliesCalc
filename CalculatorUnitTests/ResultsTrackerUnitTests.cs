@@ -140,7 +140,7 @@ namespace CalculatorUnitTests
         [DataTestMethod]
         [DataRow(0)]
         [DataRow(1)]
-        [DataRow(100)]
+        [DataRow(10000)]
         [DataRow(125)]
         public void ResultsTracker_GetNumberOfWins_DefenderWins(int expectedNumberOfWins)
         {
