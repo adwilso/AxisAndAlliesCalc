@@ -46,6 +46,15 @@ namespace CalculatorUnitTests
             Army defender = TestHelpers.CreateWithTestUnits(1, false, true, true);
             return ArmyOutcome.Fight(attacker, defender);
         }
+        public static IOutcome CreateStalemate()
+        {
+            Fleet attacker = new Fleet();
+            attacker.AddAircraftCarriers(1, true, false);
+            attacker.AddBombers(2, true, true);
+            Fleet defender = new Fleet();
+            defender.AddSubmarines(1, true, true);
+            return FleetOutcome.Fight(attacker, defender);
+        }
         public static int SetPropertyAndReturnRemainder(Action<int> t, int maxValue)
         {
             int value = rnd.Next(0, maxValue);
