@@ -201,6 +201,5 @@ namespace CalculatorUnitTests
             Assert.AreEqual(expectedStalemates, tracker.Stalemates);
             Assert.AreEqual(100, tracker.StalemateRate);
         }
-
     }
 }

@@ -315,20 +315,22 @@ namespace CalculatorUnitTests
             Assert.IsFalse(outcome.AttackerCanStillFight);
             Assert.IsTrue(outcome.DefenderCanStillFight);
         }
-        [TestMethod]
-        public void Fleet_SubsVsPlanes_Stalemate()
+        [DataTestMethod]
+        [DataRow(2,1)]
+        [DataRow(10,3)]
+        public void Fleet_SubsVsPlanes_Stalemate(int planes, int subs)
         {
             Fleet attacker = new Fleet();
             Fleet defender = new Fleet();
-            attacker.AddAircraftCarriers(1, true, false);
-            attacker.AddFighters(2, true, true);
-            defender.AddSubmarines(1, true, true);
+            attacker.AddAircraftCarriers(planes / 2, true, false);
+            attacker.AddFighters(planes, true, true);
+            defender.AddSubmarines(subs, true, true);
             Assert.IsTrue(FleetOutcome.CanFightEachOther(attacker, defender));
             IOutcome outcome = FleetOutcome.Fight(attacker, defender);
             Assert.AreEqual(Posture.Stalemate, outcome.Winner);
             Assert.IsTrue(outcome.AttackerCanStillFight);
             Assert.IsTrue(outcome.DefenderCanStillFight);
-            Assert.AreEqual(2, attacker.PlanesWithoutLandingLocation());
+            Assert.AreEqual(planes, attacker.PlanesWithoutLandingLocation());
         }
         [TestMethod]
         public void Fleet_TieFight_OnlySubs()

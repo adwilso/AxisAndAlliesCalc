@@ -125,7 +125,7 @@
                     <StackPanel Grid.Row="1" Grid.Column="0">
                         <Label Content="Attacker Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label Content="Defender Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>                        
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="1">

@@ -313,7 +313,6 @@ namespace Calculator
             hitCount = DamageBattleshipAndReturnRemainder(Battleships, hitCount);
             hitCount = RemoveAndReturnRemainder(Cruisers, hitCount);
             hitCount = RemoveAndReturnRemainder(Destroyers, hitCount);
-            hitCount = RemoveAndReturnRemainder(Submarines, hitCount);
             hitCount = RemoveAndReturnRemainder(AircraftCarriers, hitCount);
             hitCount = RemoveAndReturnRemainder(Battleships, hitCount);
             if (hasDestroyer)
