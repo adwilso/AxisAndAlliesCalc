@@ -87,6 +87,7 @@ namespace Calculator
             lblTieRateNavy.Content = results.TieRate + "%";
             lblAttackerAverageIPCLostNavy.Content = results.AverageAttackerIPCLost();
             lblDefenderAverageIPCLostNavy.Content = results.AverageDefenderIPCLost();
+            lblStalemateRateNavy.Content = results.StalemateRate + "%";
 
             Debug.WriteLine("Defender Wins: " + results.DefenderWins + " Percentage: " + results.DefenderWins / results.TotalFights);
             Debug.WriteLine("Defender Average Losses: " + results.TotalDefenderIPCLost / results.TotalFights);

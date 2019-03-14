@@ -122,7 +122,6 @@ namespace CalculatorUnitTests
             Assert.AreEqual(expectedNumberOfLosses, tracker.TotalDefenderIPCLost + numberOfLosses);
         }
         [DataTestMethod]
-        [DataRow(0)]
         [DataRow(1)]
         [DataRow(10000)]
         [DataRow(125)]
@@ -136,9 +135,13 @@ namespace CalculatorUnitTests
             Assert.AreEqual(expectedNumberOfWins, tracker.AttackerWins);
             Assert.AreEqual(0, tracker.DefenderWins);
             Assert.AreEqual(0, tracker.Ties);
+            Assert.AreEqual(100, tracker.AttackerWinRate);
+            Assert.AreEqual(0, tracker.DefenderWinRate);
+            Assert.AreEqual(0, tracker.TieRate);
+            Assert.AreEqual(0, tracker.Stalemates);
+            Assert.AreEqual(0, tracker.StalemateRate);
         }
         [DataTestMethod]
-        [DataRow(0)]
         [DataRow(1)]
         [DataRow(10000)]
         [DataRow(125)]
@@ -152,6 +155,51 @@ namespace CalculatorUnitTests
             Assert.AreEqual(expectedNumberOfWins, tracker.DefenderWins);
             Assert.AreEqual(0, tracker.AttackerWins);
             Assert.AreEqual(0, tracker.Ties);
+            Assert.AreEqual(0, tracker.AttackerWinRate);
+            Assert.AreEqual(100, tracker.DefenderWinRate);
+            Assert.AreEqual(0, tracker.TieRate);
+            Assert.AreEqual(0, tracker.Stalemates);
+            Assert.AreEqual(0, tracker.StalemateRate);
+        }
+        [DataTestMethod]
+        [DataRow(1)]
+        [DataRow(10000)]
+        [DataRow(125)]
+        public void ResultsTracker_GetNumberOfTies_AllTies(int expectedNumberOfTies)
+        {
+            ResultsTracker tracker = new ResultsTracker();
+            for (int i = 0; i < expectedNumberOfTies; i++)
+            {
+                tracker.Outcomes.Add(TestHelpers.CreateTie());
+            }
+            Assert.AreEqual(0, tracker.DefenderWins);
+            Assert.AreEqual(0, tracker.AttackerWins);
+            Assert.AreEqual(expectedNumberOfTies, tracker.Ties);
+            Assert.AreEqual(0, tracker.AttackerWinRate);
+            Assert.AreEqual(0, tracker.DefenderWinRate);
+            Assert.AreEqual(100, tracker.TieRate);
+            Assert.AreEqual(0, tracker.Stalemates);
+            Assert.AreEqual(0, tracker.StalemateRate);
+        }
+        [DataTestMethod]
+        [DataRow(1)]
+        [DataRow(10000)]
+        [DataRow(125)]
+        public void ResultsTracker_GetNumberOfTies_AllStalemate(int expectedStalemates)
+        {
+            ResultsTracker tracker = new ResultsTracker();
+            for (int i = 0; i < expectedStalemates; i++)
+            {
+                tracker.Outcomes.Add(TestHelpers.CreateStalemate());
+            }
+            Assert.AreEqual(0, tracker.DefenderWins);
+            Assert.AreEqual(0, tracker.AttackerWins);
+            Assert.AreEqual(0, tracker.Ties);
+            Assert.AreEqual(0, tracker.AttackerWinRate);
+            Assert.AreEqual(0, tracker.DefenderWinRate);
+            Assert.AreEqual(0, tracker.TieRate);
+            Assert.AreEqual(expectedStalemates, tracker.Stalemates);
+            Assert.AreEqual(100, tracker.StalemateRate);
         }
     }
 }
