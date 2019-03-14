@@ -41,9 +41,9 @@ namespace CalculatorUnitTests
         public void ResultsTracker_AttackerWinsAll()
         {
             ResultsTracker results = new ResultsTracker();
-            results.Outcomes.Add(TestHelpers.CreateAttackerWin());
-            results.Outcomes.Add(TestHelpers.CreateAttackerWin());
-            results.Outcomes.Add(TestHelpers.CreateAttackerWin());
+            results.AddOutcome(TestHelpers.CreateAttackerWin());
+            results.AddOutcome(TestHelpers.CreateAttackerWin());
+            results.AddOutcome(TestHelpers.CreateAttackerWin());
 
             Assert.AreEqual(results.AttackerWins, 3);
             Assert.AreEqual(results.TotalAttackerIPCLost, 0);
@@ -58,9 +58,9 @@ namespace CalculatorUnitTests
         public void ResultsTracker_DefenderWinsAll()
         {
             ResultsTracker results = new ResultsTracker();
-            results.Outcomes.Add(TestHelpers.CreateDefenderWin());
-            results.Outcomes.Add(TestHelpers.CreateDefenderWin());
-            results.Outcomes.Add(TestHelpers.CreateDefenderWin());
+            results.AddOutcome(TestHelpers.CreateDefenderWin());
+            results.AddOutcome(TestHelpers.CreateDefenderWin());
+            results.AddOutcome(TestHelpers.CreateDefenderWin());
 
             Assert.AreEqual(results.AttackerWins, 0);
             Assert.AreEqual(results.TotalDefenderIPCLost, 0);
@@ -75,9 +75,9 @@ namespace CalculatorUnitTests
         public void ResultsTracker_TieAll()
         {
             ResultsTracker results = new ResultsTracker();
-            results.Outcomes.Add(TestHelpers.CreateTie());
-            results.Outcomes.Add(TestHelpers.CreateTie());
-            results.Outcomes.Add(TestHelpers.CreateTie());
+            results.AddOutcome(TestHelpers.CreateTie());
+            results.AddOutcome(TestHelpers.CreateTie());
+            results.AddOutcome(TestHelpers.CreateTie());
 
             Assert.AreEqual(results.AttackerWins, 0);
             Assert.AreEqual(results.AttackerWinRate, 0.0);
@@ -100,7 +100,7 @@ namespace CalculatorUnitTests
                 //Oh this is horrifying, but if it works....
                 numberOfLosses = TestHelpers.SetPropertyAndReturnRemainder(
                     (n) => outcome.AttackerIpcLosses = n, numberOfLosses);
-                tracker.Outcomes.Add(outcome);
+                tracker.AddOutcome(outcome);
             }
             Assert.AreEqual(expectedNumberOfLosses, tracker.TotalAttackerIPCLost + numberOfLosses);
         }
@@ -117,7 +117,7 @@ namespace CalculatorUnitTests
                 //Oh this is horrifying, but if it works....
                 numberOfLosses = TestHelpers.SetPropertyAndReturnRemainder(
                     (n) => outcome.DefenderIpcLosses = n, numberOfLosses);
-                tracker.Outcomes.Add(outcome);
+                tracker.AddOutcome(outcome);
             }
             Assert.AreEqual(expectedNumberOfLosses, tracker.TotalDefenderIPCLost + numberOfLosses);
         }
@@ -131,7 +131,7 @@ namespace CalculatorUnitTests
             ResultsTracker tracker = new ResultsTracker();
             for (int i = 0; i < expectedNumberOfWins; i++)
             {
-                tracker.Outcomes.Add(TestHelpers.CreateAttackerWin());
+                tracker.AddOutcome(TestHelpers.CreateAttackerWin());
             }
             Assert.AreEqual(expectedNumberOfWins, tracker.AttackerWins);
             Assert.AreEqual(0, tracker.DefenderWins);
@@ -147,7 +147,7 @@ namespace CalculatorUnitTests
             ResultsTracker tracker = new ResultsTracker();
             for (int i = 0; i < expectedNumberOfWins; i++)
             {
-                tracker.Outcomes.Add(TestHelpers.CreateDefenderWin());
+                tracker.AddOutcome(TestHelpers.CreateDefenderWin());
             }
             Assert.AreEqual(expectedNumberOfWins, tracker.DefenderWins);
             Assert.AreEqual(0, tracker.AttackerWins);

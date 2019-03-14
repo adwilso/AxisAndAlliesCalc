@@ -25,7 +25,7 @@ namespace Calculator
                 attackers = _window.GetArmyAttackers();
                 defenders = _window.GetArmyDefenders();
                 var outcome = ArmyOutcome.Fight(attackers, defenders);
-                results.Outcomes.Add(outcome);
+                results.AddOutcome(outcome);
             }
 
             _window.OutputArmyStats(results);
@@ -42,7 +42,7 @@ namespace Calculator
                 attackers = _window.GetNavyAttackers();
                 defenders = _window.GetNavyDefenders();
                 var outcome = FleetOutcome.Fight(attackers, defenders);
-                results.Outcomes.Add(outcome);
+                results.AddOutcome(outcome);
             }
             _window.OutputNavyStats(results);
         }
