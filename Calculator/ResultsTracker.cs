@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-
     public class ResultsTracker
     {
         private List<IOutcome> Outcomes { get; set; }

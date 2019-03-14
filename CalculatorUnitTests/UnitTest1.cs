@@ -52,13 +52,6 @@ namespace CalculatorUnitTests
             t.Invoke(value);
             return maxValue - value;
         }
-        /*
-        public static int SetPropertyAndReturnRemainder(Action<double> t, int maxValue)
-        {
-            int value = rnd.Next(0, maxValue);
-            t.Invoke(value);
-            return maxValue - value;
-        }*/
         public static OutcomeMock CreateOutcomeWithBogusData()
         {
             OutcomeMock outcome = new OutcomeMock();
@@ -257,6 +250,22 @@ namespace CalculatorUnitTests
             MethodInfo addMethod = t.GetMethod(addMethodName);
             addMethod.Invoke(army, new object[] { unitsToAdd, false, false });
             Assert.AreEqual(unitsToAdd * unit.IpcValue, army.CurrentIpcValue());
+        }
+        //Need to move supported to unsupported and vice versa
+        //Also need to test that when a battle happens, you can remove
+        //inf or art and have things shuffle correctly
+        [TestMethod]
+        public void Army_RebalanceInfantry()
+        {
+            //First add infantry to the army, find the value of army
+            Army army = new Army();
+            army.AddInfantry(2);
+            Infantry inf = new Infantry(false,false);
+            Assert.AreEqual(inf.IpcValue * 2, army.CurrentIpcValue());
+            Assert.IsFalse(true);
+
+            //Add artillery, check the value includes supported infantry
+            army.AddArtillery(1);
         }
     }
     [TestClass]

@@ -24,7 +24,6 @@ namespace Calculator
         {
             //Debug.WriteLine(s);
         }
-
         public Army()
         {
             Infantry = new List<Unit>();
