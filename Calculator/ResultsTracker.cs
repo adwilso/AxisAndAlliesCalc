@@ -24,14 +24,14 @@ namespace Calculator
         {
             get
             {
-                return Outcomes.Sum(x => x.AttackerIpcLosses);                
+                return Outcomes.Sum(x => x.AttackerIpcLosses);
             }
         }
         public double TotalDefenderIPCLost
         {
             get
             {
-                return Outcomes.Sum(x => x.DefenderIpcLosses);                
+                return Outcomes.Sum(x => x.DefenderIpcLosses);
             }
         }
         public double DefenderWins
@@ -45,7 +45,7 @@ namespace Calculator
         {
             get
             {
-                return Outcomes.Count(x => x.Winner == Posture.Attack);                
+                return Outcomes.Count(x => x.Winner == Posture.Attack);
             }
         }
         public double Ties
@@ -53,6 +53,13 @@ namespace Calculator
             get
             {
                 return Outcomes.Count(x => x.Winner == Posture.None);
+            }
+        }
+        public double Stalemates
+        {
+            get
+            {
+                return Outcomes.Count(x => x.Winner == Posture.Stalemate);
             }
         }
         public double AttackerWinRate
@@ -74,6 +81,13 @@ namespace Calculator
             get
             {
                 return Math.Round(Ties / TotalFights * 100, 2);
+            }
+        }
+        public double StalemateRate
+        {
+            get
+            {
+                return Math.Round(Stalemates / TotalFights * 100, 2);
             }
         }
         public ResultsTracker()

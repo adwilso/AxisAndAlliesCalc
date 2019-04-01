@@ -170,7 +170,7 @@ namespace CalculatorUnitTests
             ResultsTracker tracker = new ResultsTracker();
             for (int i = 0; i < expectedNumberOfTies; i++)
             {
-                tracker.Outcomes.Add(TestHelpers.CreateTie());
+                tracker.AddOutcome(TestHelpers.CreateTie());
             }
             Assert.AreEqual(0, tracker.DefenderWins);
             Assert.AreEqual(0, tracker.AttackerWins);
@@ -190,7 +190,7 @@ namespace CalculatorUnitTests
             ResultsTracker tracker = new ResultsTracker();
             for (int i = 0; i < expectedStalemates; i++)
             {
-                tracker.Outcomes.Add(TestHelpers.CreateStalemate());
+                tracker.AddOutcome(TestHelpers.CreateStalemate());
             }
             Assert.AreEqual(0, tracker.DefenderWins);
             Assert.AreEqual(0, tracker.AttackerWins);
