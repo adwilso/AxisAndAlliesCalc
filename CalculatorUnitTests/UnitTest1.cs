@@ -264,17 +264,18 @@ namespace CalculatorUnitTests
         //Also need to test that when a battle happens, you can remove
         //inf or art and have things shuffle correctly
         [TestMethod]
-        public void Army_RebalanceInfantry()
+        public void Army_RebalanceInfantry_AddOneArtillery()
         {
             //First add infantry to the army, find the value of army
             Army army = new Army();
             army.AddInfantry(2);
             Infantry inf = new Infantry(false,false);
+            SupportedInfantry sup = new SupportedInfantry(false, false);
+            Artillery art = new Artillery(false, false);
             Assert.AreEqual(inf.IpcValue * 2, army.CurrentIpcValue());
-            Assert.IsFalse(true);
-
             //Add artillery, check the value includes supported infantry
             army.AddArtillery(1);
+            Assert.AreEqual(inf.IpcValue + art.IpcValue + sup.IpcValue, army.CurrentIpcValue());
         }
     }
     [TestClass]

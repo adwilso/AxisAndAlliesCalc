@@ -135,6 +135,39 @@ namespace Calculator
                 Bombers.Add(new Bomber(isTest, alwaysHit));
             }
         }
+        private void RebalanceSupportedInfantry()
+        {
+            //Bail if there are not units needing balancing or if they are already 
+            //balanced
+            if ((Artillery.Count == 0 && SupportedInfantry.Count == 0) ||
+                (Artillery.Count == SupportedInfantry.Count))
+            {
+                return; 
+            }
+            //if you need fewer supported infantry 
+            if (Artillery.Count < SupportedInfantry.Count)
+            {
+                int targetNumberOfSupportedToRemove = Artillery.Count - SupportedInfantry.Count;
+                //Make sure we have enough to move
+                int actualNumberOfSupportedToRemove = (targetNumberOfSupportedToRemove <= Infantry.Count) ?
+                                                        targetNumberOfSupportedToRemove :
+                                                        Infantry.Count;
+                //Need a convert function that will move supported to non (or vise versa) while keeping the same
+                //test and alwaysHit state in the new items
+                for (int i = 0; i < actualNumberOfSupportedToRemove; i++)
+                {
+                    var inf = Infantry.ElementAt(0);
+                    Infantry.RemoveAt(0);
+                    SupportedInfantry.Add(new SupportedInfantry(inf.IsTest, inf.AlwaysHit);
+                }
+            }
+            //remove some
+
+            //if you need more supported infantry 
+            //add some 
+            this is broken; 
+
+        }
         public int RollAADefense(int numberOfPlanes)
         {
             int aaHitCount = 0;
