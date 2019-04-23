@@ -68,6 +68,7 @@ namespace Calculator
             {
                 Infantry.Add(new Infantry(isTest, alwaysHit));
             }
+            RebalanceSupportedInfantry();
         }
         public void AddSupportedInfantry(int count, bool isTest = false, bool alwaysHit = false)
         {
@@ -79,6 +80,7 @@ namespace Calculator
             {
                 SupportedInfantry.Add(new SupportedInfantry(isTest, alwaysHit));
             }
+            RebalanceSupportedInfantry();
         }
         public void AddArtillery(int count, bool isTest = false, bool alwaysHit = false)
         {
@@ -90,6 +92,7 @@ namespace Calculator
             {
                 Artillery.Add(new Artillery(isTest, alwaysHit));
             }
+            RebalanceSupportedInfantry();
         }
         public void AddTanks(int count, bool isTest = false, bool alwaysHit = false)
         {
@@ -147,27 +150,44 @@ namespace Calculator
             //if you need fewer supported infantry 
             if (Artillery.Count < SupportedInfantry.Count)
             {
-                int targetNumberOfSupportedToRemove = Artillery.Count - SupportedInfantry.Count;
+                int targetNumberOfSupportedToRemove = SupportedInfantry.Count - Artillery.Count;
                 //Make sure we have enough to move
-                int actualNumberOfSupportedToRemove = (targetNumberOfSupportedToRemove <= Infantry.Count) ?
-                                                        targetNumberOfSupportedToRemove :
-                                                        Infantry.Count;
+                int actualNumberOfSupportedToRemove = Math.Min(targetNumberOfSupportedToRemove, 
+                                                                SupportedInfantry.Count);
                 //Need a convert function that will move supported to non (or vise versa) while keeping the same
                 //test and alwaysHit state in the new items
                 for (int i = 0; i < actualNumberOfSupportedToRemove; i++)
                 {
-                    var inf = Infantry.ElementAt(0);
-                    Infantry.RemoveAt(0);
-                    SupportedInfantry.Add(new SupportedInfantry(inf.IsTest, inf.AlwaysHit);
+                    var supInf = SupportedInfantry.ElementAt(0);
+                    SupportedInfantry.RemoveAt(0);
+                    Infantry.Add(new Infantry(supInf.IsTest, supInf.AlwaysHit));
                 }
             }
-            //remove some
-
-            //if you need more supported infantry 
-            //add some 
-            this is broken; 
-
+            //Need more supported infantry and have units to do it
+            else if (Artillery.Count > SupportedInfantry.Count && Infantry.Count > 0)
+            {
+                int targetNumberOfSupportedToAdd = Artillery.Count - SupportedInfantry.Count;
+                int actualNumberOfSupportedToAdd = Math.Min(targetNumberOfSupportedToAdd,
+                                                            Infantry.Count);
+                for (int i = 0; i < actualNumberOfSupportedToAdd; i++)
+                {
+                    var inf = Infantry.ElementAt(0);
+                    Infantry.RemoveAt(0);
+                    SupportedInfantry.Add(new SupportedInfantry(inf.IsTest, inf.AlwaysHit));
+                }
+            }
         }
+        //TODO:Fix. This is a terrible hack but I can't think of a better way to test this
+        public void Test_ReturnInfantryAndArtilleryCount(out int infantryCount, 
+                                                        out int supportedCount, 
+                                                        out int artilleryCount)
+        {
+            infantryCount = Infantry.Count;
+            supportedCount = SupportedInfantry.Count;
+            artilleryCount = Artillery.Count;
+            return;
+        }
+
         public int RollAADefense(int numberOfPlanes)
         {
             int aaHitCount = 0;
@@ -300,6 +320,7 @@ namespace Calculator
             hitCount = RemoveAndReturnRemainder(Tanks, hitCount);
             hitCount = RemoveAndReturnRemainder(Bombers, hitCount);
             hitCount = RemoveAndReturnRemainder(Fighters, hitCount);
+            RebalanceSupportedInfantry();
 
         }
         public void RemoveGroundForceAttacker(int hitCount)
@@ -311,6 +332,7 @@ namespace Calculator
             hitCount = RemoveAndReturnRemainder(Tanks, hitCount);
             hitCount = RemoveAndReturnRemainder(Fighters, hitCount);
             hitCount = RemoveAndReturnRemainder(Bombers, hitCount);
+            RebalanceSupportedInfantry();
         }
 
         public bool CanStillFight()

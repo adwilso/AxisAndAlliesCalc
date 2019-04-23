@@ -263,19 +263,78 @@ namespace CalculatorUnitTests
         //Need to move supported to unsupported and vice versa
         //Also need to test that when a battle happens, you can remove
         //inf or art and have things shuffle correctly
-        [TestMethod]
-        public void Army_RebalanceInfantry_AddOneArtillery()
+        [DataTestMethod]
+        [DataRow(1,1)] //Move it over
+        [DataRow(100, 100)] //Volume test
+        [DataRow(10, 5)] //Not all infantry
+        [DataRow(5, 10)] //too much artillery
+        [DataRow(10, 0)] //No artillery
+        [DataRow(0, 10)] //No infantry
+        public void Army_RebalanceInfantry_AddArtillery(int totalInfantry, int totalArtillery)
         {
-            //First add infantry to the army, find the value of army
+            //First add infantry to the army,
             Army army = new Army();
-            army.AddInfantry(2);
-            Infantry inf = new Infantry(false,false);
-            SupportedInfantry sup = new SupportedInfantry(false, false);
-            Artillery art = new Artillery(false, false);
-            Assert.AreEqual(inf.IpcValue * 2, army.CurrentIpcValue());
-            //Add artillery, check the value includes supported infantry
-            army.AddArtillery(1);
-            Assert.AreEqual(inf.IpcValue + art.IpcValue + sup.IpcValue, army.CurrentIpcValue());
+            army.AddInfantry(totalInfantry);
+            army.Test_ReturnInfantryAndArtilleryCount(out int infCount, out int supCount, out int artCount);
+            Assert.AreEqual(infCount, totalInfantry);
+            Assert.AreEqual(supCount, 0);
+            Assert.AreEqual(artCount, 0);
+
+            army.AddArtillery(totalArtillery);
+            army.Test_ReturnInfantryAndArtilleryCount(out infCount, out supCount, out artCount);
+            Assert.AreEqual(infCount, Math.Max( 0, totalInfantry - totalArtillery));
+            Assert.AreEqual(supCount, Math.Min(totalInfantry, totalArtillery));
+            Assert.AreEqual(artCount, totalArtillery);
+        }
+        [DataTestMethod]
+        [DataRow(1, 1)] //Move it over
+        [DataRow(100, 100)] //Volume test
+        [DataRow(10, 5)] //Not all infantry
+        [DataRow(5, 10)] //too much artillery
+        [DataRow(10, 0)] //No artillery
+        [DataRow(0, 10)] //No infantry
+        public void Army_RebalanceInfantry_AddInfantry(int totalInfantry, int totalArtillery)
+        {
+            //First add artillery to the army
+            Army army = new Army();
+            army.AddArtillery(totalArtillery);
+            army.Test_ReturnInfantryAndArtilleryCount(out int infCount, out int supCount, out int artCount);
+            Assert.AreEqual(infCount, 0);
+            Assert.AreEqual(supCount, 0);
+            Assert.AreEqual(artCount, totalArtillery);
+
+            army.AddInfantry(totalInfantry);
+            army.Test_ReturnInfantryAndArtilleryCount(out infCount, out supCount, out artCount);
+            Assert.AreEqual(infCount, Math.Max(0, totalInfantry - totalArtillery));
+            Assert.AreEqual(supCount, Math.Min(totalInfantry, totalArtillery));
+            Assert.AreEqual(artCount, totalArtillery);
+        }
+        [DataTestMethod]
+        [DataRow(1,1,1)] //It works
+        [DataRow(100, 100, 100)] //Stress Test
+        [DataRow(10, 5, 3)] //Not all infantry supported
+        [DataRow(5, 10, 10)] //Too much artillery
+        [DataRow(0, 10, 4)] //No infantry
+        [DataRow(10, 0, 4)] //No artillery
+        [DataRow(10, 10, 100)] //Total loss
+        public void Army_RebalanceInfatry_RemoveUnits(int totalInfantry, int totalArtillery, int unitsToRemove)
+        {
+            Army army = new Army();
+            army.AddArtillery(totalArtillery);
+            army.AddInfantry(totalInfantry);
+
+            //Check that we are in a good state here
+            army.Test_ReturnInfantryAndArtilleryCount(out int infCount, out int supCount, out int artCount);
+            Assert.AreEqual(infCount, Math.Max(0, totalInfantry - totalArtillery));
+            Assert.AreEqual(supCount, Math.Min(totalInfantry, totalArtillery));
+            Assert.AreEqual(artCount, totalArtillery);
+
+            //Don't know the order of unit removal, so just test to make sure that we've got the right ratios
+            army.RemoveGroundForceAttacker(unitsToRemove);
+            army.Test_ReturnInfantryAndArtilleryCount(out infCount, out supCount, out artCount);
+            Assert.IsTrue(supCount <= artCount);
+            Assert.IsTrue(supCount + infCount <= totalInfantry);
+            Assert.IsTrue(artCount <= totalArtillery);
         }
     }
     [TestClass]
