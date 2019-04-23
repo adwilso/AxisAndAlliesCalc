@@ -47,27 +47,23 @@
                         <Label Content="Inf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="attInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical">
-                        <Label Content="SInf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox x:Name="attSupInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-                    </StackPanel>
-                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" >
+                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" >
                         <Label Content="Art" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="attArt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Vertical" >
+                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" >
                         <Label Content="Tank" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="attTank" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="0" Grid.Column="5" Orientation="Vertical" >
+                    <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Vertical" >
                         <Label Content="AA" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="attAA" IsEnabled="False" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="0" Grid.Column="6" Orientation="Vertical" >
+                    <StackPanel Grid.Row="0" Grid.Column="5" Orientation="Vertical" >
                         <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="attFight" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="0" Grid.Column="7" Orientation="Vertical" >
+                    <StackPanel Grid.Row="0" Grid.Column="6" Orientation="Vertical" >
                         <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="attBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
@@ -79,26 +75,22 @@
                         <TextBox x:Name="defInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical" >
-                        <Label Content="SInf" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox x:Name="defSupInf" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
-                    </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" >
                         <Label Content="Art" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="defArt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" >
+                    <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" >
                         <Label Content="Tank" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="defTank" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Vertical" >
+                    <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical" >
                         <Label Content="AA" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="defAA" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="6" Orientation="Vertical" >
+                    <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Vertical" >
                         <Label Content="Fight" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="defFight" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="7" Orientation="Vertical" >
+                    <StackPanel Grid.Row="1" Grid.Column="6" Orientation="Vertical" >
                         <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="defBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>

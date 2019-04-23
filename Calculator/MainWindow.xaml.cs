@@ -105,10 +105,7 @@ namespace Calculator
             Army attackers = new Army();
             //We are throwing on bad input. Way easier in V1
             int unitCount= Int32.Parse(attInf.Text);
-            attackers.AddInfantry(unitCount);            
-
-            unitCount = Int32.Parse(attSupInf.Text);
-            attackers.AddSupportedInfantry(unitCount);            
+            attackers.AddInfantry(unitCount);         
 
             unitCount = Int32.Parse(attTank.Text);
             attackers.AddTanks(unitCount);
@@ -129,10 +126,7 @@ namespace Calculator
             Army defenders = new Army();
             //We are throwing on bad input. Way easier in V1
             Int32 unitCount = Int32.Parse(defInf.Text);
-            defenders.AddInfantry(unitCount);            
-
-            unitCount = Int32.Parse(defSupInf.Text);
-            defenders.AddSupportedInfantry(unitCount);
+            defenders.AddInfantry(unitCount);
 
             unitCount = Int32.Parse(defTank.Text);
             defenders.AddTanks(unitCount);
@@ -196,7 +190,6 @@ namespace Calculator
 
 
             defInf.Text = "0";
-            defSupInf.Text = "0";
             defArt.Text = "0";
             defAA.Text = "0";
             defTank.Text = "0";
@@ -204,7 +197,6 @@ namespace Calculator
             defBomb.Text = "0";
 
             attInf.Text = "0";
-            attSupInf.Text = "0";
             attArt.Text = "0";
             attAA.Text = "0";
             attTank.Text = "0";

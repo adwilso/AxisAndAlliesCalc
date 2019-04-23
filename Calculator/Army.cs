@@ -70,18 +70,6 @@ namespace Calculator
             }
             RebalanceSupportedInfantry();
         }
-        public void AddSupportedInfantry(int count, bool isTest = false, bool alwaysHit = false)
-        {
-            if (count < 1)
-            {
-                return;
-            }
-            for (int i = 0; i < count; i++)
-            {
-                SupportedInfantry.Add(new SupportedInfantry(isTest, alwaysHit));
-            }
-            RebalanceSupportedInfantry();
-        }
         public void AddArtillery(int count, bool isTest = false, bool alwaysHit = false)
         {
             if (count < 1)

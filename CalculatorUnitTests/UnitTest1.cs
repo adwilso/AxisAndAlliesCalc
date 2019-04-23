@@ -16,7 +16,6 @@ namespace CalculatorUnitTests
         {
             Army army = new Army();
             army.AddInfantry(count,isTest,alwaysHit);
-            army.AddSupportedInfantry(count, isTest, alwaysHit);
             army.AddArtillery(count, isTest, alwaysHit);
             if (includeAA == true)
             {
@@ -109,14 +108,19 @@ namespace CalculatorUnitTests
         public void Army_AddUnitsAndCount_AllUnitTypes()
         {
             Army army = TestHelpers.CreateWithUnits(1, true);
-            Assert.AreEqual(army.NumberOfRemainingUnits(), 7);
+            Assert.AreEqual(army.NumberOfRemainingUnits(), 6);
         }
-        [TestMethod]
-        public void Army_AddAndRemoveUnits_Attacker()
+        [DataTestMethod]
+        [DataRow(1,1)]
+        [DataRow(1, 4)]
+        [DataRow(10, 10)]
+        [DataRow(4,10)]
+        public void Army_AddAndRemoveUnits_Attacker(int unitsToAdd, int unitsToRemove)
         {
-            Army army = TestHelpers.CreateWithUnits(1, false);
-            army.RemoveGroundForceAttacker(4);
-            Assert.AreEqual(army.NumberOfRemainingUnits(), 2);
+            Army army = TestHelpers.CreateWithUnits(unitsToAdd, false);
+            int numInitialUnits = army.NumberOfRemainingUnits();
+            army.RemoveGroundForceAttacker(unitsToRemove);
+            Assert.AreEqual(army.NumberOfRemainingUnits(), Math.Max(0, numInitialUnits - unitsToRemove));
             Assert.IsTrue(army.CanStillFight());
         }
         [TestMethod]
@@ -136,12 +140,17 @@ namespace CalculatorUnitTests
             Assert.AreEqual(army.NumberOfRemainingUnits(), startingUnits);
             Assert.IsTrue(army.CanStillFight());
         }
-        [TestMethod]
-        public void Army_AddAndRemoveUnits_Defender()
+        [DataTestMethod]
+        [DataRow(1, 1)]
+        [DataRow(1, 4)]
+        [DataRow(10, 10)]
+        [DataRow(4, 10)]
+        public void Army_AddAndRemoveUnits_Defender(int unitsToAdd, int unitsToRemove)
         {
-            Army army = TestHelpers.CreateWithUnits(1, true);
-            army.RemoveGroundForceDefender(6);
-            Assert.AreEqual(army.NumberOfRemainingUnits(), 1);
+            Army army = TestHelpers.CreateWithUnits(unitsToAdd, false);
+            int numInitialUnits = army.NumberOfRemainingUnits();
+            army.RemoveGroundForceDefender(unitsToRemove);
+            Assert.AreEqual(army.NumberOfRemainingUnits(), Math.Max(0, numInitialUnits - unitsToRemove));
             Assert.IsTrue(army.CanStillFight());
         }
         [TestMethod]
