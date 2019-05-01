@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="Axis and Allies Simulator" Height="450.5" Width="550">
-    <TabControl HorizontalAlignment="Center" Height="404.5" VerticalAlignment="Center" Width="525">
+        Title="Axis and Allies Simulator" Height="450.5" Width="850">
+    <TabControl HorizontalAlignment="Center" Height="404.5" VerticalAlignment="Center" Width="825">
         <TabItem Header="Ground Combat">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -15,7 +16,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <!--Combat Controls-->
                 <Grid Grid.Row="0" Grid.Column="0">
@@ -112,12 +113,12 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition  Height="10"/>
-                        <RowDefinition  Height="auto"/>
+                        <RowDefinition  Height="120"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="1" Grid.Column="0">
                         <Label Content="Attacker Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label Content="Defender Wins" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>                        
+                        <Label Content="Ties" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="1">
@@ -128,14 +129,44 @@
 
                     <StackPanel Grid.Row="1" Grid.Column="2">
                         <Label Content="Average Attacker IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Median Attacker IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label Content="Average Defender IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label Content="Median Defender IPC Lost: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="3">
                         <Label x:Name="lblAttackerAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblAttackerMedianIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Label x:Name="lblDefenderAverageIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Label x:Name="lblDefenderMedianIPCLost" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
                     </StackPanel>
                 </Grid>
+                
+                <!-- Advanced Results Controls-->
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="10"/>
+                        <RowDefinition  Height="auto"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+                
+                <!--
+                <lvc:CartesianChart Grid.Column="1" Grid.Row="2" x:Name="AttackerChart" Height="auto" Width="auto">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Rate" MaxRange="1000"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="IPC Losses"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>-->
             </Grid>
         </TabItem>
         <TabItem Header="Naval Combat">

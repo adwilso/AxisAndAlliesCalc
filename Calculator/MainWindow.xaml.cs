@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathNet.Numerics.Statistics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LiveCharts.Configurations;
+using LiveCharts;
 
 
 namespace Calculator
@@ -21,16 +24,12 @@ namespace Calculator
     /// Interaction logic for MainWindow.xaml
     /// 
     /// To do list: 
-    ///  Add the ability to choose a naval fight
-    ///     Probably want to do this on another tab
-    ///     Output the results of the naval fight, including more details on stalemates
     ///     
     ///  Output the stats on the main form
     ///    Record information such as median losses
     ///    More information on ties
     ///  Change the order that units are eliminated
-    ///  Handle the cases where infantry goes from supported to unsupported on attack
-    ///  Gracefully handle the cases where the data was malformed
+     ///  Gracefully handle the cases where the data was malformed
     ///  Reset button to clear all the text boxes
     ///  Save button for common territories
     ///  Minimal number of units to win a battle given an opponent
@@ -72,12 +71,40 @@ namespace Calculator
             lblTieRate.Content = results.TieRate + "%";
             lblAttackerAverageIPCLost.Content = results.AverageAttackerIPCLost();
             lblDefenderAverageIPCLost.Content = results.AverageDefenderIPCLost();
+            lblAttackerMedianIPCLost.Content = results.MedianAttackerIPCLost;
+            lblDefenderMedianIPCLost.Content = results.MedianDefenderIPCLost;
 
             Debug.WriteLine("Defender Wins: " + results.DefenderWins + " Percentage: " + results.DefenderWins / results.TotalFights);
             Debug.WriteLine("Defender Average Losses: " + results.TotalDefenderIPCLost / results.TotalFights);
             Debug.WriteLine("Attacker Wins: " + results.AttackerWins + " Percentage: " + results.AttackerWins / results.TotalFights);
             Debug.WriteLine("Attacker Average Losses: " + results.TotalAttackerIPCLost / results.TotalFights);
 
+            Debug.WriteLine("Attacker Median Losses: " + results.MedianAttackerIPCLost);
+            Debug.WriteLine("Defender Median Losses: " + results.MedianDefenderIPCLost);
+
+
+            /* Test Code adding a chart. This is left as a sample because the samples online are annoying
+            Histogram h = results.AttackerLossesHistogram();
+            CartesianMapper<Bucket> mapper = new CartesianMapper<Bucket>()
+                .X(value => Math.Max(0, Math.Ceiling(value.LowerBound)))
+                .Y(value => value.Count);
+            var series = new LiveCharts.Wpf.LineSeries(mapper);
+            series.Values = new ChartValues<Bucket>();
+            for (int i= 0; i < 100; i++)
+            {
+                try
+                {
+                    var b = h.GetBucketOf(i);
+                    if (b != null)
+                    {
+                        series.Values.Add(b);
+                    }
+                }
+                catch (Exception ex) { }
+            }
+
+            AttackerChart.Series.Add(series);
+            */
             Debug.WriteLine("========================================================");
         }
         public void OutputNavyStats(ResultsTracker results)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MathNet.Numerics.Statistics;
 
 namespace Calculator
 {
@@ -89,7 +90,7 @@ namespace Calculator
             {
                 return Math.Round(Stalemates / TotalFights * 100, 2);
             }
-        }
+        }            
         public ResultsTracker()
         {
             Outcomes = new List<IOutcome>();
@@ -101,6 +102,26 @@ namespace Calculator
         public double AverageDefenderIPCLost()
         {
             return TotalDefenderIPCLost / TotalFights;
+        }
+        public double MedianAttackerIPCLost
+        {
+            get
+            {
+                return Statistics.Median(Outcomes.Select(x => x.AttackerIpcLosses));
+            }
+        }
+        public double MedianDefenderIPCLost
+        {
+            get
+            {
+                return Statistics.Median(Outcomes.Select(x => x.DefenderIpcLosses));
+            }
+        }
+        public Histogram AttackerLossesHistogram()
+        {
+            var t = Outcomes.Select(x => x.AttackerIpcLosses).ToArray();
+            var h = new Histogram(t,100);
+            return h;
         }
     }
 }
