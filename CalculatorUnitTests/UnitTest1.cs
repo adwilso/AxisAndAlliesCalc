@@ -342,6 +342,18 @@ namespace CalculatorUnitTests
             Assert.IsTrue(supCount + infCount <= totalInfantry);
             Assert.IsTrue(artCount <= totalArtillery);
         }
+        [DataTestMethod]
+        [DataRow(1,1)] //It works
+        [DataRow(0,1)] //Nothing remaining
+        [DataRow(4,1)] //Remove all but one
+        [DataRow(5,1)] //Remove nothing
+        public void Army_ReduceToMinSet(int finalNumberOfUnits, int startingNumberOfUnits)
+        { 
+            Army army = TestHelpers.CreateWithTestUnits(startingNumberOfUnits, false, true, true);
+            army.ReduceToCheapestAttacker(finalNumberOfUnits);
+            Assert.AreEqual(finalNumberOfUnits, army.NumberOfRemainingUnits());
+            Assert.AreEqual(0, army.Losses);
+        }
     }
     [TestClass]
     public class OutcomeUnitTests

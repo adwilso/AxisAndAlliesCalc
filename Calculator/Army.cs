@@ -322,7 +322,56 @@ namespace Calculator
             hitCount = RemoveAndReturnRemainder(Bombers, hitCount);
             RebalanceSupportedInfantry();
         }
+        public bool ReduceToCheapestAttacker(int TargetRemaining)
+        {
+            //Not screwing around with AA here. Just clear them out
+            RemoveAndReturnRemainder(AA, NumberOfRemainingUnits(), false);
+            //Make sure this is a possible ask once AA are gone. 
+            if (TargetRemaining > NumberOfRemainingUnits())
+            {
+                return false;
+            }
+            int numToRemove = NumberOfRemainingUnits() - TargetRemaining;
 
+            //Get rid of the expensive ones if you can
+            numToRemove = RemoveAndReturnRemainder(Bombers, numToRemove, false);
+            numToRemove = RemoveAndReturnRemainder(Fighters, numToRemove, false);
+            numToRemove = RemoveAndReturnRemainder(Tanks, numToRemove, false);
+            if (numToRemove == 0)
+            {
+                //No need to be smart. We are done
+                return true;
+            }
+
+            //Remove excess artillery
+            if (Artillery.Count > SupportedInfantry.Count)
+            {
+                numToRemove = RemoveAndReturnRemainder(Artillery, Artillery.Count - SupportedInfantry.Count, false);
+            }
+            //Cheapest is inf, but sup inf are better, so if we can, include art to create sup inf
+            if (SupportedInfantry.Count > 0)
+            {
+                int numArtillerySaved = Math.Min((int)Math.Floor((Double)(TargetRemaining/2)), 
+                                                          SupportedInfantry.Count);
+                int numArtilleryRemoved = Artillery.Count - numArtillerySaved;
+                //Remove the artillery first
+                int remainder = RemoveAndReturnRemainder(Artillery, Artillery.Count - numArtillerySaved, false);
+                //Can't believe the remainder above because it isn't using numToRemove as the input
+                numToRemove = numToRemove - numArtilleryRemoved + remainder;
+                RebalanceSupportedInfantry();
+                //Do this after the rebalance so we don't have to keep of it in this method
+                numToRemove = RemoveAndReturnRemainder(Infantry, numToRemove, false);
+                numToRemove = RemoveAndReturnRemainder(SupportedInfantry, numToRemove, false);
+            }
+            else
+            {
+                numToRemove = RemoveAndReturnRemainder(Artillery, numToRemove, false);
+                numToRemove = RemoveAndReturnRemainder(SupportedInfantry, numToRemove, false);
+                numToRemove = RemoveAndReturnRemainder(Infantry, numToRemove, false);
+            }            
+            RebalanceSupportedInfantry();
+            return true;
+        }
         public bool CanStillFight()
         {
             if (Infantry.Count > 0)
@@ -353,17 +402,21 @@ namespace Calculator
         }
         private int RemoveAndReturnRemainder(List<Unit> units, int hitCount)
         {
+            return RemoveAndReturnRemainder(units, hitCount, true);
+        }
+        private int RemoveAndReturnRemainder(List<Unit> units, int hitCount, bool countLosses)
+        {
             if (units.Count == 0)
             {
                 return hitCount;
             }
-            for (; hitCount > 0; hitCount--)
+            for (; hitCount > 0 && units.Count > 0; hitCount--)
             {
-                if (units.Count == 0)
+                //Removing without losses for ReduceToCheapestAttacker
+                if (countLosses)
                 {
-                    break;
+                    Losses += units.ElementAt(0).IpcValue;
                 }
-                Losses += units.ElementAt(0).IpcValue;
                 units.RemoveAt(0);
             }
             return hitCount;

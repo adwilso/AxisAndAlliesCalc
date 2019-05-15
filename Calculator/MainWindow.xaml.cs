@@ -33,6 +33,7 @@ namespace Calculator
     ///  Reset button to clear all the text boxes
     ///  Save button for common territories
     ///  Minimal number of units to win a battle given an opponent
+    ///  Option to flip between attacking and defending
     /// </summary>
     /// 
 
@@ -248,6 +249,11 @@ namespace Calculator
             ProcessingFight();
             controller.NavyFight();
             FinishedProcessing();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            controller.FindMinAttackingArmy(95);
         }
     }
 }

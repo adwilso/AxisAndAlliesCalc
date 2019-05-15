@@ -95,12 +95,15 @@
                         <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="defBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
                     </StackPanel>
-                    <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click" />
                     <StackPanel Grid.Row="0" Grid.Column="10">
                         <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
                         <TextBox x:Name="rounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
                     </StackPanel>
+                    <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click" />
                     <Button Grid.Row ="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
+
+                    <Button Grid.Row="2" Grid.Column="7" Grid.ColumnSpan="3" Content="Min Set" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
+
                 </Grid>
 
                 <!--Results Controls-->

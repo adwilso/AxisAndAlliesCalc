@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,46 @@ namespace Calculator
                 results.AddOutcome(outcome);
             }
             _window.OutputNavyStats(results);
+        }
+        public void FindMinAttackingArmy(double certainty)
+        {
+            Army pristeneAttacker = _window.GetArmyAttackers();
+            int maxNumberOfUnits = pristeneAttacker.NumberOfRemainingUnits();
+            int rounds = _window.GetRounds();
+            for (int numUnitsThisAttack = 1;
+                numUnitsThisAttack < maxNumberOfUnits;
+                numUnitsThisAttack++)
+            {
+                ResultsTracker results = new ResultsTracker();
+                for (int i = 0; i < rounds; i++)
+                {
+                    Army defender = _window.GetArmyDefenders();
+                    Army attacker = _window.GetArmyAttackers();
+                    attacker.ReduceToCheapestAttacker(numUnitsThisAttack);
+                    var outcome = ArmyOutcome.Fight(attacker, defender);
+                    results.AddOutcome(outcome);
+                }
+                if (results.AttackerWinRate > certainty)
+                {
+                    _window.OutputArmyStats(results);
+                    pristeneAttacker.ReduceToCheapestAttacker(numUnitsThisAttack);
+                    Debug.WriteLine(pristeneAttacker);
+                    break;
+                }
+            }
+
+            
+
+            //given an army with K units
+            //for i=0; i<k; i++
+            //  Create a regular defender
+            //  Create attacker with cheapest/best K units available
+            //  Attack with I units
+            //  Check if success >95%
+            //      if not keep going
+
+            //If we ever succeeded, return the min set
+            //else fail out
         }
     }
 }
