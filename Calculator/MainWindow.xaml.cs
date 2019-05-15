@@ -17,7 +17,6 @@ using System.Windows.Shapes;
 using LiveCharts.Configurations;
 using LiveCharts;
 
-
 namespace Calculator
 {
     /// <summary>
@@ -30,10 +29,8 @@ namespace Calculator
     ///    More information on ties
     ///  Change the order that units are eliminated
      ///  Gracefully handle the cases where the data was malformed
-    ///  Reset button to clear all the text boxes
     ///  Save button for common territories
-    ///  Minimal number of units to win a battle given an opponent
-    ///  Option to flip between attacking and defending
+    ///  Make the UI better for the min set
     /// </summary>
     /// 
 
@@ -269,8 +266,35 @@ namespace Calculator
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
+        {            
+            controller.FindMinAttackingArmy(double.Parse(txtCertainty.Text));
+        }
+
+        private void BtnFlip_Click(object sender, RoutedEventArgs e)
         {
-            controller.FindMinAttackingArmy(95);
+            FlipTextBox(attInf, defInf);
+            FlipTextBox(attArt, defArt);
+            FlipTextBox(attTank, defTank);
+            FlipTextBox(attAA, defAA);
+            FlipTextBox(attFight, defFight);
+            FlipTextBox(attBomb, defBomb);
+        }
+        private void FlipTextBox(TextBox one, TextBox two)
+        {
+            string temp = one.Text;
+            one.Text = two.Text;
+            two.Text = temp;
+        }
+
+        private void BtnFlipNavy_Click(object sender, RoutedEventArgs e)
+        {
+            FlipTextBox(attBattleship, defBattleship);
+            FlipTextBox(attCruiser, defCruiser);
+            FlipTextBox(attDestroyer, defDestroyer);
+            FlipTextBox(attSub, defSub);
+            FlipTextBox(attAircraftCarrier, defAircraftCarrier);
+            FlipTextBox(attFighters, defFighters);
+            FlipTextBox(attBombers, defBombers);
         }
     }
 }

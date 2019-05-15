@@ -66,7 +66,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="0" Grid.Column="6" Orientation="Vertical" >
                         <Label Content="Bomb" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox x:Name="attBomb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38"/>
+                        <TextBox x:Name="attBomb" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="38" Margin="0,0,3.333,0"/>
                     </StackPanel>
 
 
@@ -98,13 +98,14 @@
                     <StackPanel Grid.Row="0" Grid.Column="10">
                         <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
                         <TextBox x:Name="rounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+                        <Button x:Name="btnFlip" Content="Flip Sides" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Click="BtnFlip_Click"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="10">
                         <Label Content="Certainty (%)" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
                         <TextBox x:Name="txtCertainty" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="95" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
                     </StackPanel>
-                    
+
                     <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Content="Fight!" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click" />
                     <Button Grid.Row ="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
 
@@ -152,7 +153,7 @@
 
                     </StackPanel>
                 </Grid>
-                
+
                 <!-- Advanced Results Controls-->
                 <Grid Grid.Column="1" Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -166,7 +167,7 @@
                     <Label Content="Winning Attacker: " Grid.Row="0" Grid.Column="0" />
                     <TextBlock x:Name="lblWinningAttacker" Text="-------" Grid.Row="0" Grid.Column="1" TextWrapping="WrapWithOverflow"/>
                 </Grid>
-                
+
                 <!--
                 <lvc:CartesianChart Grid.Column="1" Grid.Row="2" x:Name="AttackerChart" Height="auto" Width="auto">
                     <lvc:CartesianChart.AxisY>
@@ -272,6 +273,7 @@
                     <StackPanel Grid.Row="0" Grid.Column="10">
                         <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
                         <TextBox x:Name="NavalRounds" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="10000" VerticalAlignment="Top" Width="61" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+                        <Button x:Name="btnFlipNavy" Content="Flip Sides" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,20,0,0" Click="BtnFlipNavy_Click"/>
                     </StackPanel>
                     <Button x:Name="NavyReset" Grid.Row ="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Reset" HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="100" Click="Button_Click_1"/>
 
