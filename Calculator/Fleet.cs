@@ -345,10 +345,30 @@ namespace Calculator
             hitCount = RemoveAndReturnRemainder(Submarines, hitCount);
             hitCount = RemoveAndReturnRemainder(Fighters, hitCount);
             hitCount = RemoveAndReturnRemainder(Bombers, hitCount);
-            hitCount = RemoveAndReturnRemainder(AircraftCarriers, hitCount);
-            hitCount = RemoveAndReturnRemainder(Battleships, hitCount);
+            hitCount = RemoveAndReturnRemainder(AircraftCarriers, hitCount);//
+            hitCount = RemoveAndReturnRemainder(Battleships, hitCount);//
         }
-        private int DamageBattleshipAndReturnRemainder(List<Unit> battleships, int hitCount)
+        public bool ReduceToCheapestAttacker(int TargetRemaining)
+        { 
+            if (TargetRemaining > NumberOfRemainingUnits())
+            {
+                return false;
+            }
+            int numToRemove = NumberOfRemainingUnits() - TargetRemaining;
+            //Start with getting rid of battleships
+            numToRemove = RemoveAndReturnRemainder(Battleships, numToRemove, false);
+            //A little clever with handling the planes here. We are going to not put the aircraft carrier
+            // at risk. Instead we'll attack with planes and know they can fall back if needed. 
+            numToRemove = RemoveAndReturnRemainder(AircraftCarriers, numToRemove, false);
+            numToRemove = RemoveAndReturnRemainder(Cruisers, numToRemove, false);
+            numToRemove = RemoveAndReturnRemainder(Bombers, numToRemove, false);
+            numToRemove = RemoveAndReturnRemainder(Fighters, numToRemove, false);
+            numToRemove = RemoveAndReturnRemainder(Destroyers, numToRemove, false);
+            numToRemove = RemoveAndReturnRemainder(Submarines, numToRemove, false);
+            return true;
+        }
+
+            private int DamageBattleshipAndReturnRemainder(List<Unit> battleships, int hitCount)
         {
             //Go through the list of ships, for anything that is a battleship, see if it is hit
             //if it isn't hit, then add the hit and remove one hit count
@@ -367,27 +387,31 @@ namespace Calculator
         }
         private int RemoveAndReturnRemainder(List<Unit> units, int hitCount)
         {
+            return RemoveAndReturnRemainder(units, hitCount, true); ;
+        }
+        private int RemoveAndReturnRemainder(List<Unit> units, int hitCount, bool countLosses)
+        {
             if (units.Count == 0)
             {
                 return hitCount;
             }
-            for (; hitCount > 0; hitCount--)
+            for (; hitCount > 0 && units.Count > 0; hitCount--)
             {
-                if (units.Count == 0)
+                //Removing without losses for ReduceToCheapestAttacker
+                if (countLosses)
                 {
-                    break;
+                    IPCLosses += units.ElementAt(0).IpcValue;
                 }
-                IPCLosses += units.ElementAt(0).IpcValue;
                 units.RemoveAt(0);
             }
             return hitCount;
         }
         public override string ToString()
         {
-            return "Battleships: " + Battleships.Count + "Cruisers: " + Cruisers.Count + 
-                "Destroyers: " + Destroyers.Count + "Aircraft Carriers: " + AircraftCarriers.Count + 
-                "Submarines: " + Submarines.Count + "Fighters: " + Fighters.Count + 
-                "Bombers: " + Bombers.Count;
+            return "Battleships: " + Battleships.Count + " Cruisers: " + Cruisers.Count + 
+                " Destroyers: " + Destroyers.Count + " Aircraft Carriers: " + AircraftCarriers.Count + 
+                " Submarines: " + Submarines.Count + " Fighters: " + Fighters.Count + 
+                " Bombers: " + Bombers.Count;
         }
     }
 

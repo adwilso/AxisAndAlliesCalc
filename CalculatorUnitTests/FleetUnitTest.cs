@@ -434,5 +434,18 @@ namespace CalculatorUnitTests
             Fleet fleet = FleetTestHelpers.CreateWithTestUnits(0, false, false);
             Assert.IsFalse(fleet.CanStillFight());
         }
+        [DataTestMethod]
+        [DataRow(1, 1)] //It works
+        [DataRow(0, 1)] //Nothing remaining
+        [DataRow(4, 1)] //Remove all but one
+        [DataRow(5, 1)] //Remove nothing
+        public void Fleet_ReduceToCheapestAttacker(int finalNumberOfUnits, int startingNumberOfUnits)
+        {
+            Fleet fleet = FleetTestHelpers.CreateWithTestUnits(startingNumberOfUnits, true, true);
+            fleet.ReduceToCheapestAttacker(finalNumberOfUnits);
+            Assert.AreEqual(finalNumberOfUnits, fleet.NumberOfRemainingUnits());
+            Assert.AreEqual(0, fleet.IPCLosses);
+        }
+
     }
 }

@@ -87,5 +87,34 @@ namespace Calculator
             //If we ever succeeded, return the min set
             //else fail out
         }
+
+        internal void FindMinAttackingNavy(double certainty)
+        {
+            Fleet pristeneAttacker = _window.GetNavyAttackers();
+            int maxNumberOfUnits = pristeneAttacker.NumberOfRemainingUnits();
+            int rounds = _window.GetRounds();
+            for (int numUnitsThisAttack = 1;
+                numUnitsThisAttack < maxNumberOfUnits;
+                numUnitsThisAttack++)
+            {
+                ResultsTracker results = new ResultsTracker();
+                for (int i = 0; i < rounds; i++)
+                {
+                    Fleet defender = _window.GetNavyDefenders();
+                    Fleet attacker = _window.GetNavyAttackers();
+                    attacker.ReduceToCheapestAttacker(numUnitsThisAttack);
+                    var outcome = FleetOutcome.Fight(attacker, defender);
+                    results.AddOutcome(outcome);
+                }
+                if (results.AttackerWinRate > certainty)
+                {
+                    pristeneAttacker.ReduceToCheapestAttacker(numUnitsThisAttack);
+                    _window.OutputNavyStats(results);
+                    _window.OutputWinningAttacker(pristeneAttacker);
+                    return;
+                }
+            }
+            _window.NoWinningAttackerFound();
+        }
     }
 }

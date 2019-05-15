@@ -121,6 +121,13 @@ namespace Calculator
 
             Debug.WriteLine("========================================================");
         }
+
+        internal void OutputWinningAttacker(Fleet attacker)
+        {
+            lblWinningAttackerFleet.Text = attacker.ToString();
+            Debug.WriteLine("Winning attacker: " + attacker.ToString());
+        }
+
         public void OutputWinningAttacker(Army attacker)
         {
             lblWinningAttacker.Text = attacker.ToString();
@@ -128,7 +135,7 @@ namespace Calculator
         }
         public void NoWinningAttackerFound()
         {
-            lblWinningAttacker.Text = "No winning attacker found";
+            lblWinningAttacker.Text = "No winning attacker found at given certainty";
             lblAttackerWinRate.Content = "";
             lblDefenderWinRate.Content = "";
             lblTieRate.Content = "";
@@ -295,6 +302,11 @@ namespace Calculator
             FlipTextBox(attAircraftCarrier, defAircraftCarrier);
             FlipTextBox(attFighters, defFighters);
             FlipTextBox(attBombers, defBombers);
+        }
+
+        private void NavyMinSet_Click(object sender, RoutedEventArgs e)
+        {
+            controller.FindMinAttackingNavy(double.Parse(txtNavyCertainty.Text));
         }
     }
 }
