@@ -67,13 +67,13 @@ namespace Calculator
                 }
                 if (results.AttackerWinRate > certainty)
                 {
-                    _window.OutputArmyStats(results);
                     pristeneAttacker.ReduceToCheapestAttacker(numUnitsThisAttack);
-                    Debug.WriteLine(pristeneAttacker);
-                    break;
+                    _window.OutputArmyStats(results);
+                    _window.OutputWinningAttacker(pristeneAttacker);
+                    return;
                 }
             }
-
+            _window.NoWinningAttackerFound();
             
 
             //given an army with K units

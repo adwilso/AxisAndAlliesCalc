@@ -124,6 +124,23 @@ namespace Calculator
 
             Debug.WriteLine("========================================================");
         }
+        public void OutputWinningAttacker(Army attacker)
+        {
+            lblWinningAttacker.Text = attacker.ToString();
+            Debug.WriteLine("Winning attacker: " + attacker.ToString());
+        }
+        public void NoWinningAttackerFound()
+        {
+            lblWinningAttacker.Text = "No winning attacker found";
+            lblAttackerWinRate.Content = "";
+            lblDefenderWinRate.Content = "";
+            lblTieRate.Content = "";
+            lblAttackerAverageIPCLost.Content = "";
+            lblDefenderAverageIPCLost.Content = "";
+            lblAttackerMedianIPCLost.Content = "";
+            lblDefenderMedianIPCLost.Content = "";
+            Debug.WriteLine("No winning attacker found at given certainty");
+        }
         public int GetRounds()
         {
             return Int32.Parse(rounds.Text);            

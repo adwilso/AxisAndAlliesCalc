@@ -425,7 +425,7 @@ namespace Calculator
         {
             return "Inf: " + Infantry.Count + " Sup Inf: " + SupportedInfantry.Count +
                 " AA: " + AA.Count +
-                " Art: " + Artillery.Count + " Tanks:" + Tanks.Count +
+                " Art: " + Artillery.Count + " Tanks: " + Tanks.Count +
                 " Fighters: " + Fighters.Count + " Bombers: " + Bombers.Count;
         }
 
